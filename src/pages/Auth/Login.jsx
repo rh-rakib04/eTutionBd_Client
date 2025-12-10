@@ -40,7 +40,7 @@ const Login = () => {
           displayName: result.user.displayName,
           photoURL: result.user.photoURL,
         };
-        axiosSecure.post("/users", userInfo).then((res) => {
+        axiosSecure.post("/students", userInfo).then((res) => {
           if (res.data.insertedId) {
             console.log("User created in database");
           }

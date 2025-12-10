@@ -38,9 +38,7 @@ const Navbar = () => {
       {/* LEFT: LOGO (Mobile + Desktop) */}
       <div className="navbar-start">
         <NavLink to="/" className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold">
-            eT
-          </div>
+          <img className="w-6 h-6" src="/logo.png" alt="" />
           <span className=" text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
             eTuitionBd
           </span>

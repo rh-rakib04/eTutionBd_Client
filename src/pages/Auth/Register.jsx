@@ -3,9 +3,9 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { getAuth } from "firebase/auth";
-import axios from "axios";
 import useAuth from "../../hooks/useAuth";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAxios from "../../hooks/useAxios";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const { registerUser, signInGoogle, updateUserProfile } = useAuth();
@@ -16,7 +16,7 @@ const Register = () => {
   } = useForm();
   const location = useLocation();
   const navigate = useNavigate();
-  const axiosSecure = useAxiosSecure();
+  const axios = useAxios();
   const auth = getAuth();
 
   // Handle Register
@@ -54,12 +54,24 @@ const Register = () => {
         photoURL: user.photoURL,
       };
 
-      await axiosSecure.post("/student", userInfo);
+      await axios.post("/students", userInfo);
 
-      // 6) Redirect user
-      navigate(location?.state || "/");
+      // 6) Show success alert
+      Swal.fire({
+        icon: "success",
+        title: "Registration Successful!",
+        text: `Welcome, ${user.displayName}!`,
+      }).then(() => {
+        // 7) Redirect user after alert
+        navigate(location?.state || "/");
+      });
     } catch (error) {
-      console.log("Registration Error:", error);
+      // Show error alert
+      Swal.fire({
+        icon: "error",
+        title: "Registration Failed",
+        text: error.message || "Something went wrong!",
+      });
     }
   };
 
