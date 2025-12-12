@@ -34,123 +34,124 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar bg-base-100 shadow-md px-4  sticky top-0 z-50">
-      {/* LEFT: LOGO (Mobile + Desktop) */}
-      <div className="navbar-start">
-        <NavLink to="/" className="flex items-center gap-2">
-          <img className="w-6 h-6" src="/logo.png" alt="" />
-          <span className=" text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-            eTuitionBd
-          </span>
-        </NavLink>
-      </div>
+    <div className="bg-base-100 shadow-md">
+      <div className="navbar px-4 max-w-7xl mx-auto  sticky top-0 z-50">
+        {" "}
+        {/* LEFT: LOGO (Mobile + Desktop) */}
+        <div className="navbar-start">
+          <NavLink to="/" className="flex items-center gap-2">
+            <img className="w-6 h-6" src="/logo.png" alt="" />
+            <span className=" text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              eTuitionBd
+            </span>
+          </NavLink>
+        </div>
+        {/* CENTER: NAV (Desktop) */}
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal px-1">{navItems}</ul>
+        </div>
+        {/* RIGHT: MENU BUTTON (Mobile) + THEME TOGGLE*/}
+        <div className="navbar-end flex items-center gap-2">
+          {/* MOBILE NAV MENU */}
+          <div className="dropdown dropdown-left lg:hidden">
+            <label tabIndex={0} className="btn btn-ghost btn-circle">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                />
+              </svg>
+            </label>
 
-      {/* CENTER: NAV (Desktop) */}
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{navItems}</ul>
-      </div>
-
-      {/* RIGHT: MENU BUTTON (Mobile) + THEME TOGGLE*/}
-      <div className="navbar-end flex items-center gap-2">
-        {/* MOBILE NAV MENU */}
-        <div className="dropdown dropdown-left lg:hidden">
-          <label tabIndex={0} className="btn btn-ghost btn-circle">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 shadow-lg rounded-box mt-3 w-60 p-2"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            </svg>
-          </label>
+              {navItems}
 
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 shadow-lg rounded-box mt-3 w-60 p-2"
-          >
-            {navItems}
+              <div className="border-t my-2"></div>
 
-            <div className="border-t my-2"></div>
+              {/* THEME TOGGLE inside menu */}
+              <ThemeToggle />
 
-            {/* THEME TOGGLE inside menu */}
+              <div className="border-t my-2"></div>
+
+              {/* AUTH - MOBILE */}
+              {user ? (
+                <>
+                  <li>
+                    <NavLink to="/dashboard">Dashboard</NavLink>
+                  </li>
+                  <li>
+                    <button className="text-red-500" onClick={handleLogout}>
+                      Logout
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <NavLink to="/auth/login">Login</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/auth/register">Register</NavLink>
+                  </li>
+                </>
+              )}
+            </ul>
+          </div>
+
+          {/* THEME TOGGLE (Always visible) */}
+          <div className="hidden sm:block lg:hidden">
+            <ThemeToggle />
+          </div>
+
+          {/* DESKTOP AUTH */}
+          <div className="hidden lg:flex items-center gap-2">
             <ThemeToggle />
 
-            <div className="border-t my-2"></div>
-
-            {/* AUTH - MOBILE */}
             {user ? (
               <>
-                <li>
-                  <NavLink to="/dashboard">Dashboard</NavLink>
-                </li>
-                <li>
-                  <button className="text-red-500" onClick={handleLogout}>
-                    Logout
-                  </button>
-                </li>
+                <NavLink
+                  className="btn btn-sm bg-gradient-to-r from-indigo-500 to-purple-600 text-white"
+                  to="/dashboard"
+                >
+                  Dashboard
+                </NavLink>
+                <div className="avatar">
+                  <div className="w-10 h-10 rounded-full ring ring-indigo-400">
+                    <img src={user.photoURL} />
+                  </div>
+                </div>
+                <button
+                  className="btn btn-outline btn-sm text-red-500 border-red-300"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
               </>
             ) : (
               <>
-                <li>
-                  <NavLink to="/auth/login">Login</NavLink>
-                </li>
-                <li>
-                  <NavLink to="/auth/register">Register</NavLink>
-                </li>
+                <NavLink className="btn btn-outline btn-sm" to="/auth/login">
+                  Login
+                </NavLink>
+                <NavLink
+                  className="btn btn-sm bg-gradient-to-r from-indigo-500 to-purple-600 text-white"
+                  to="/auth/register"
+                >
+                  Register
+                </NavLink>
               </>
             )}
-          </ul>
-        </div>
-
-        {/* THEME TOGGLE (Always visible) */}
-        <div className="hidden sm:block lg:hidden">
-          <ThemeToggle />
-        </div>
-
-        {/* DESKTOP AUTH */}
-        <div className="hidden lg:flex items-center gap-2">
-          <ThemeToggle />
-
-          {user ? (
-            <>
-              <NavLink
-                className="btn btn-sm bg-gradient-to-r from-indigo-500 to-purple-600 text-white"
-                to="/dashboard"
-              >
-                Dashboard
-              </NavLink>
-              <div className="avatar">
-                <div className="w-10 h-10 rounded-full ring ring-indigo-400">
-                  <img src={user.photoURL} />
-                </div>
-              </div>
-              <button
-                className="btn btn-outline btn-sm text-red-500 border-red-300"
-                onClick={handleLogout}
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <NavLink className="btn btn-outline btn-sm" to="/auth/login">
-                Login
-              </NavLink>
-              <NavLink
-                className="btn btn-sm bg-gradient-to-r from-indigo-500 to-purple-600 text-white"
-                to="/auth/register"
-              >
-                Register
-              </NavLink>
-            </>
-          )}
+          </div>
         </div>
       </div>
     </div>

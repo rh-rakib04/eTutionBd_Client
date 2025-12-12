@@ -14,7 +14,7 @@ const HeroSection = () => {
   });
 
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden rounded-b-">
       {/* Background Glow */}
       <div className="absolute inset-0">
         <div className="absolute -top-32 -right-32 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl"></div>
@@ -57,15 +57,15 @@ const HeroSection = () => {
         {/* Stats */}
         <div className="mt-12 grid grid-cols-3 gap-6 text-center">
           <div>
-            <h3 className="text-2xl font-bold text-indigo-600">5000+</h3>
+            <h3 className="text-2xl font-extrabold text-indigo-600">5000+</h3>
             <p className="text-sm text-gray-500">Active Tutors</p>
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-indigo-600">10000+</h3>
+            <h3 className="text-2xl font-extrabold text-indigo-600">10000+</h3>
             <p className="text-sm text-gray-500">Students Helped</p>
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-indigo-600">2000+</h3>
+            <h3 className="text-2xl font-extrabold text-indigo-600">2000+</h3>
             <p className="text-sm text-gray-500">Tuitions Posted</p>
           </div>
         </div>

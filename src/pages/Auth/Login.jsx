@@ -93,7 +93,7 @@ const Login = () => {
           </div>
 
           <Link
-            to="/forgotPassword"
+            to="/auth/forgotPassword"
             className="text-sm mt-1 cursor-pointer text-primary hover:underline"
           >
             Forgot Password?
@@ -107,7 +107,7 @@ const Login = () => {
         <p className="mt-3 text-center">
           Don't have an account?{" "}
           <Link
-            to="/register"
+            to="/auth/register"
             className="text-primary cursor-pointer hover:underline"
           >
             Register

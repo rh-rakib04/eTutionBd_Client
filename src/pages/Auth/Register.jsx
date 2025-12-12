@@ -6,6 +6,8 @@ import { getAuth } from "firebase/auth";
 import useAuth from "../../hooks/useAuth";
 import useAxios from "../../hooks/useAxios";
 import Swal from "sweetalert2";
+import { PiStudentDuotone } from "react-icons/pi";
+import { TfiBook } from "react-icons/tfi";
 
 const Register = () => {
   const { registerUser, signInGoogle, updateUserProfile } = useAuth();
@@ -52,6 +54,7 @@ const Register = () => {
         email: user.email,
         displayName: user.displayName,
         photoURL: user.photoURL,
+        role: data.role,
       };
 
       await axios.post("/students", userInfo);
@@ -76,20 +79,43 @@ const Register = () => {
   };
 
   // Handle Google Sign-in
-  const handelGoogleSignIn = () => {
-    signInGoogle()
-      .then(() => navigate(location?.state || "/"))
-      .catch((error) => console.log(error));
+  const handelGoogleSignIn = async () => {
+    try {
+      const result = await signInGoogle(); // Sign in with Google
+      const user = auth.currentUser;
+
+      // Save user to MongoDB with default role 'student'
+      const userInfo = {
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        role: "student", // default role
+      };
+
+      await axios.post("/students", userInfo);
+      Swal.fire({
+        icon: "success",
+        title: "Registration Successful!",
+        text: `Welcome, ${user.displayName}!`,
+      });
+      navigate(location?.state || "/");
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Google Sign-in Failed",
+        text: error.message || "Something went wrong!",
+      });
+    }
   };
 
   return (
     <div className="min-h-screen flex justify-center items-center bg-base-100 px-4">
       <div className="w-full max-w-sm">
-        <h1 className="text-3xl font-bold">Create an Account</h1>
-        <p className="text-gray-500">Register with ZapShift</p>
+        <p className=" text-3xl text-center">Register with eTuitionBd</p>
 
         {/* Form */}
-        <form onSubmit={handleSubmit(handelSignIn)}>
+        <form onSubmit={handleSubmit(handelSignIn)} >
           {/* Image Upload */}
           <div className="form-control mt-4">
             <label className="label">
@@ -138,7 +164,31 @@ const Register = () => {
             />
             {errors.email && <p className="text-red-500">Email is required</p>}
           </div>
-
+          {/* Role */}
+          <div className="form-control mt-3">
+            <label className="label">
+              <span className="label-text">Role</span>
+            </label>
+            <br />
+            <select
+              {...register("role", { required: true })}
+              className="select select-bordered"
+              defaultValue="" // To force user to pick
+            >
+              <option value="" disabled>
+                Select role
+              </option>
+              <option value="student">
+                <PiStudentDuotone />
+                Student
+              </option>
+              <option value="teacher">
+                <TfiBook />
+                Teacher
+              </option>
+            </select>
+            {errors.role && <p className="text-red-500">Role is required</p>}
+          </div>
           {/* Password */}
           <div className="form-control mt-3">
             <label className="label">
@@ -167,7 +217,7 @@ const Register = () => {
         {/* Login Link */}
         <p className="mt-3 text-center">
           Already have an account?{" "}
-          <Link to="/login" className="text-primary hover:underline">
+          <Link to="/auth/login" className="text-primary hover:underline">
             Login
           </Link>
         </p>

@@ -1,10 +1,5 @@
 import { motion } from "framer-motion";
-import {
-  ShieldCheck,
-  CreditCard,
-  Brain,
-  UserCheck,
-} from "lucide-react";
+import { ShieldCheck, CreditCard, Brain, UserCheck } from "lucide-react";
 
 const features = [
   {
@@ -31,7 +26,7 @@ const features = [
 
 const WhyChooseUs = () => {
   return (
-    <section className="py-24 relative overflow-hidden">
+    <section className="py-12 relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-indigo-500/5 to-purple-500/5"></div>
 
@@ -40,8 +35,8 @@ const WhyChooseUs = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: false }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold">
@@ -51,7 +46,8 @@ const WhyChooseUs = () => {
             </span>
           </h2>
           <p className="mt-4 text-base-content/70 max-w-2xl mx-auto">
-            A trusted platform designed to connect students with the right tutors — effortlessly.
+            A trusted platform designed to connect students with the right
+            tutors — effortlessly.
           </p>
         </motion.div>
 
@@ -72,12 +68,8 @@ const WhyChooseUs = () => {
                   <Icon className="text-white w-6 h-6" />
                 </div>
 
-                <h3 className="text-lg font-semibold mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-base-content/70">
-                  {item.desc}
-                </p>
+                <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+                <p className="text-sm text-base-content/70">{item.desc}</p>
               </motion.div>
             );
           })}

@@ -22,13 +22,13 @@ export default function Loading() {
       />
 
       <motion.h2
-        className="mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent font-bold text-xl"
+        className="mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent font-bold text-4xl"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
       >
-        <div className="flex items-center ">
-          <img className="w-6 h-6" src="/logo.png" alt="" />
+        <div className="flex items-center gap-2 ">
+          <img className="w-12 h-12" src="/logo.png" alt="" />
           <span> eTuitionBd</span>
         </div>
       </motion.h2>
