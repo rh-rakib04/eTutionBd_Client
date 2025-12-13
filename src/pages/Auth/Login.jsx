@@ -3,15 +3,14 @@ import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-
-// import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAxios from "../../hooks/useAxios";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const { signIn, signInGoogle } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const axiosSecure = useAxiosSecure();
+  const axios = useAxios();
   // form hook
   const {
     register,
@@ -23,7 +22,12 @@ const Login = () => {
     console.log(data);
     signIn(data.email, data.password)
       .then((result) => {
-        console.log(result);
+        const user = result.user;
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful!",
+          text: `Welcome, ${user.displayName}!`,
+        });
         navigate(location?.state || "/");
       })
       .catch((error) => {
@@ -40,10 +44,15 @@ const Login = () => {
           displayName: result.user.displayName,
           photoURL: result.user.photoURL,
         };
-        axiosSecure.post("/students", userInfo).then((res) => {
+        axios.post("/students", userInfo).then((res) => {
           if (res.data.insertedId) {
             console.log("User created in database");
           }
+          Swal.fire({
+            icon: "success",
+            title: "Signin Successful!",
+            text: `Welcome, ${user.displayName}!`,
+          });
           navigate(location?.state || "/");
         });
       })
