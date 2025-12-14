@@ -5,9 +5,10 @@ import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import useAxios from "../../hooks/useAxios";
 import Swal from "sweetalert2";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const Login = () => {
-  const { signIn, signInGoogle } = useAuth();
+  const { signIn, signInGoogle, loading } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const axios = useAxios();
@@ -44,7 +45,7 @@ const Login = () => {
           displayName: result.user.displayName,
           photoURL: result.user.photoURL,
         };
-        axios.post("/students", userInfo).then((res) => {
+        axios.post("/users", userInfo).then((res) => {
           if (res.data.insertedId) {
             console.log("User created in database");
           }
@@ -108,8 +109,12 @@ const Login = () => {
             Forgot Password?
           </Link>
 
-          <button type="submit" className="btn btn-secondary w-full mt-5">
-            Login
+          <button type="submit" className="btn btn-accent w-full mt-5">
+            {loading ? (
+              <TbFidgetSpinner className="animate-spin m-auto" />
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
 

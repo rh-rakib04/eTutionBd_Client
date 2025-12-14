@@ -8,6 +8,9 @@ import Contact from "../pages/Contact";
 import AuthLayout from "../Layout/AuthLayout";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
+import PrivateRoutes from "../routes/PrivateRoutes";
+import TuitionDetails from "../components/Home/TuitionDetails";
+import BeATutor from "../pages/BeATutor";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +24,22 @@ const router = createBrowserRouter([
       {
         path: "/tuitions",
         Component: Tuitions,
+      },
+      {
+        path: "/tuitions/:id",
+        element: (
+          <PrivateRoutes>
+            <TuitionDetails />
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "/be-a-tutor",
+        element: (
+          <PrivateRoutes>
+            <BeATutor />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/tutors",

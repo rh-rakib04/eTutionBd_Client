@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { FaMapMarkerAlt, FaMoneyBillWave, FaBook } from "react-icons/fa";
 import { HiOutlineArrowRight } from "react-icons/hi";
+import { Link } from "react-router";
 
 const TuitionCard = ({ tuition }) => {
   return (
@@ -28,9 +29,7 @@ const TuitionCard = ({ tuition }) => {
 
       {/* CONTENT */}
       <div className="p-6 space-y-3">
-        <h3 className="text-xl font-bold">
-          {tuition.title}
-        </h3>
+        <h3 className="text-xl font-bold">{tuition.title}</h3>
 
         <div className="flex items-center gap-3 text-sm text-base-content/70">
           <FaMapMarkerAlt className="text-primary" />
@@ -52,15 +51,16 @@ const TuitionCard = ({ tuition }) => {
             {tuition.applied} tutor(s) applied
           </p>
 
-          <p className="text-xs text-base-content/50">
-            {tuition.time}
-          </p>
+          <p className="text-xs text-base-content/50">{tuition.time}</p>
         </div>
 
         {/* CTA */}
-        <button className="mt-4 w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-primary text-primary-content font-semibold group-hover:gap-3 transition-all">
+        <Link
+          to={`/tuitions/${tuition._id}`}
+          className="mt-4 w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-primary text-primary-content font-semibold group-hover:gap-3 transition-all"
+        >
           View Details <HiOutlineArrowRight />
-        </button>
+        </Link>
       </div>
 
       {/* GLOW EFFECT */}

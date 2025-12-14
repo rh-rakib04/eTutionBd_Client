@@ -8,11 +8,13 @@ import useAxios from "../../hooks/useAxios";
 import Swal from "sweetalert2";
 import { PiStudentDuotone } from "react-icons/pi";
 import { TfiBook } from "react-icons/tfi";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const Register = () => {
-  const { registerUser, signInGoogle, updateUserProfile } = useAuth();
+  const { registerUser, signInGoogle, updateUserProfile, loading } = useAuth();
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -20,7 +22,7 @@ const Register = () => {
   const navigate = useNavigate();
   const axios = useAxios();
   const auth = getAuth();
-
+  const role = watch("role");
   // Handle Register
   const handelSignIn = async (data) => {
     try {
@@ -57,10 +59,29 @@ const Register = () => {
         role: data.role,
       };
 
-      await axios.post("/students", userInfo);
+      await axios.post("/users", userInfo);
 
+      // tutor info
+      if (data.role === "tutor") {
+        const tutorInfo = {
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          subjects: data.subjects,
+          experience: data.experience,
+          location: data.location,
+          hourlyRate: data.rate,
+          bio: data.bio,
+        };
+
+        await axios.post("/tutors", tutorInfo);
+      }
       // 6) Show success alert
       Swal.fire({
+        toast: true,
+        position: "top-end",
+        timer: 2000,
+        showConfirmButton: false,
         icon: "success",
         title: "Registration Successful!",
         text: `Welcome, ${user.displayName}!`,
@@ -92,7 +113,7 @@ const Register = () => {
         role: "student", // default role
       };
 
-      await axios.post("/students", userInfo);
+      await axios.post("/users", userInfo);
       Swal.fire({
         icon: "success",
         title: "Registration Successful!",
@@ -115,7 +136,7 @@ const Register = () => {
         <p className=" text-3xl text-center">Register with eTuitionBd</p>
 
         {/* Form */}
-        <form onSubmit={handleSubmit(handelSignIn)} >
+        <form onSubmit={handleSubmit(handelSignIn)}>
           {/* Image Upload */}
           <div className="form-control mt-4">
             <label className="label">
@@ -182,13 +203,72 @@ const Register = () => {
                 <PiStudentDuotone />
                 Student
               </option>
-              <option value="teacher">
+              <option value="tutor">
                 <TfiBook />
-                Teacher
+                Tutor
               </option>
             </select>
             {errors.role && <p className="text-red-500">Role is required</p>}
           </div>
+          {role === "tutor" && (
+            <>
+              <div className="form-control mt-3">
+                <label className="label">
+                  <span className="label-text">Subjects</span>
+                </label>
+                <br />
+                <input
+                  className="input input-bordered"
+                  {...register("subjects")}
+                  placeholder="Subjects"
+                />
+              </div>
+              <div className="form-control mt-3">
+                <label className="label">
+                  <span className="label-text">Experience</span>
+                </label>
+                <br />
+                <input
+                  className="input input-bordered"
+                  {...register("experience")}
+                  placeholder="Experience"
+                />
+              </div>
+              <div className="form-control mt-3">
+                <label className="label">
+                  <span className="label-text">Location</span>
+                </label>
+                <br />
+                <input
+                  className="input input-bordered"
+                  {...register("location")}
+                  placeholder="Location"
+                />
+              </div>
+              <div className="form-control mt-3">
+                <label className="label">
+                  <span className="label-text">Hourly Rate</span>
+                </label>
+                <br />
+                <input
+                  className="input input-bordered"
+                  {...register("rate")}
+                  placeholder="Hourly Rate"
+                />
+              </div>
+              <div className="form-control mt-3">
+                <label className="label">
+                  <span className="label-text">Short Bio</span>
+                </label>
+                <br />
+                <textarea
+                  className="input input-bordered"
+                  {...register("bio")}
+                  placeholder="Short Bio"
+                />
+              </div>
+            </>
+          )}
           {/* Password */}
           <div className="form-control mt-3">
             <label className="label">
@@ -209,8 +289,12 @@ const Register = () => {
             )}
           </div>
 
-          <button type="submit" className="btn btn-secondary w-full mt-5">
-            Register
+          <button type="submit" className="btn btn-accent w-full mt-5">
+            {loading ? (
+              <TbFidgetSpinner className="animate-spin m-auto" />
+            ) : (
+              "Register"
+            )}
           </button>
         </form>
 

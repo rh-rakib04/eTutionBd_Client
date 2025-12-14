@@ -18,16 +18,16 @@ const TutorCard = ({ tutor }) => {
         {/* Avatar */}
         <div className="p-[2px] rounded-full bg-gradient-to-r from-primary to-secondary">
           <img
-            src={tutor.photo}
-            alt={tutor.name}
+            src={tutor.photoURL}
+            alt={tutor.displayName}
             className="w-16 h-16 rounded-full object-cover bg-base-100"
           />
         </div>
 
         {/* Name */}
         <div>
-          <h3 className="text-lg font-semibold">{tutor.name}</h3>
-          <p className="text-sm text-base-content/70">{tutor.subject}</p>
+          <h3 className="text-lg font-semibold">{tutor.displayName}</h3>
+          <p className="text-sm text-base-content/70">{tutor.subjects}</p>
 
           {/* Rating */}
           <div className="flex items-center gap-1 text-sm mt-1">
@@ -50,18 +50,7 @@ const TutorCard = ({ tutor }) => {
         </p>
       </div>
 
-      {/* Subjects */}
-      <div className="relative z-10 flex flex-wrap gap-2 mt-4">
-        {tutor.subjects?.map((subject, i) => (
-          <span
-            key={i}
-            className="px-3 py-1 rounded-full text-xs bg-primary/10 text-primary"
-          >
-            {subject}
-          </span>
-        ))}
-      </div>
-
+      
       {/* CTA */}
       <button className="relative z-10 btn btn-primary btn-sm w-full mt-5">
         View Profile
