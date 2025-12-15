@@ -28,7 +28,7 @@ const WhyChooseUs = () => {
   return (
     <section className="py-12 relative overflow-hidden">
       {/* Background glow */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-indigo-500/5 to-purple-500/5"></div>
+      <div className="absolute inset-0 -z-10 bg-linear-to-b from-indigo-500/5 to-purple-500/5"></div>
 
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
@@ -41,7 +41,7 @@ const WhyChooseUs = () => {
         >
           <h2 className="text-4xl md:text-5xl font-bold">
             Why Choose{" "}
-            <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
               eTuitionBd
             </span>
           </h2>
@@ -64,7 +64,7 @@ const WhyChooseUs = () => {
                 viewport={{ once: true }}
                 className="group p-6 rounded-2xl bg-base-100/80 backdrop-blur-xl border border-base-300 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10 transition-all"
               >
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                <div className="w-12 h-12 rounded-xl bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center mb-4 group-hover:scale-110 transition">
                   <Icon className="text-white w-6 h-6" />
                 </div>
 

@@ -24,7 +24,7 @@ const TuitionCard = ({ tuition }) => {
         </span>
 
         {/* GRADIENT OVERLAY */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent" />
       </div>
 
       {/* CONTENT */}
@@ -64,7 +64,7 @@ const TuitionCard = ({ tuition }) => {
       </div>
 
       {/* GLOW EFFECT */}
-      <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition pointer-events-none bg-gradient-to-r from-primary/10 to-purple-500/10" />
+      <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition pointer-events-none bg-linear-to-r from-primary/10 to-purple-500/10" />
     </motion.div>
   );
 };

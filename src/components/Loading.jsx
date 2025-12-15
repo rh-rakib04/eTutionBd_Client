@@ -22,7 +22,7 @@ export default function Loading() {
       />
 
       <motion.h2
-        className="mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent font-bold text-4xl"
+        className="mt-6 bg-linear-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent font-bold text-4xl"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}

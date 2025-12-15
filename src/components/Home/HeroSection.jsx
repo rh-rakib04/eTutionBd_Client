@@ -26,7 +26,7 @@ const HeroSection = () => {
         <h1 className="text-4xl md:text-6xl font-bold leading-tight">
           Your Smart Learning Partner for
           <br />
-          <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
             {text}
           </span>
           <Cursor cursorColor="#7c3aed" />
@@ -41,7 +41,7 @@ const HeroSection = () => {
         <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
           <NavLink
             to="/tuitions"
-            className="btn px-8 bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-none hover:scale-105 transition"
+            className="btn px-8 bg-linear-to-r from-indigo-500 to-purple-600 text-white border-none hover:scale-105 transition"
           >
             Browse Tuitions →
           </NavLink>

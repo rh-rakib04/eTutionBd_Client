@@ -34,14 +34,14 @@ const Navbar = () => {
   );
 
   return (
-    <div className="bg-base-100 shadow-md">
-      <div className="navbar px-4 max-w-7xl mx-auto  sticky top-0 z-50">
+    <div className="bg-base-100 shadow-md sticky top-0 z-50">
+      <div className="navbar px-4 max-w-7xl mx-auto  ">
         {" "}
         {/* LEFT: LOGO (Mobile + Desktop) */}
         <div className="navbar-start">
           <NavLink to="/" className="flex items-center gap-2">
             <img className="w-6 h-6" src="/logo.png" alt="" />
-            <span className=" text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            <span className=" text-xl font-bold bg-linear-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
               eTuitionBd
             </span>
           </NavLink>
@@ -121,7 +121,7 @@ const Navbar = () => {
             {user ? (
               <>
                 <NavLink
-                  className="btn btn-sm bg-gradient-to-r from-indigo-500 to-purple-600 text-white"
+                  className="btn btn-sm bg-linear-to-r from-indigo-500 to-purple-600 text-white"
                   to="/dashboard"
                 >
                   Dashboard
@@ -144,7 +144,7 @@ const Navbar = () => {
                   Login
                 </NavLink>
                 <NavLink
-                  className="btn btn-sm bg-gradient-to-r from-indigo-500 to-purple-600 text-white"
+                  className="btn btn-sm bg-linear-to-r from-indigo-500 to-purple-600 text-white"
                   to="/auth/register"
                 >
                   Register

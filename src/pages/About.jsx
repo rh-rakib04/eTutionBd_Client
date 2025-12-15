@@ -4,11 +4,11 @@ const About = () => {
   return (
     <div className="bg-base-100">
       {/* HERO SECTION */}
-      <section className="py-24 bg-gradient-to-br from-indigo-600/10 to-purple-600/10 backdrop-blur-sm">
+      <section className="py-24 bg-linear-to-br from-indigo-600/10 to-purple-600/10 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold">
             About
-            <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
               {" "}
               eTuitionBd
             </span>
@@ -27,10 +27,13 @@ const About = () => {
           <div>
             <h2 className="text-3xl font-bold mb-4">Our Mission</h2>
             <p className="text-base-content/70 leading-relaxed">
-              At eTuitionBd, our mission is simple: 
-              <span className="font-semibold"> make learning accessible, personalized, and reliable</span>.
-              We connect students with verified tutors who can truly guide them
-              toward academic success.
+              At eTuitionBd, our mission is simple:
+              <span className="font-semibold">
+                {" "}
+                make learning accessible, personalized, and reliable
+              </span>
+              . We connect students with verified tutors who can truly guide
+              them toward academic success.
             </p>
           </div>
 
@@ -53,10 +56,11 @@ const About = () => {
           <p className="mt-4 text-base-content/70 leading-relaxed max-w-3xl mx-auto">
             eTuitionBd was founded with a vision to solve a common problem:
             students struggling to find the right tutor, and tutors finding it
-            difficult to reach the right students.  
-            <br /><br />
-            What started as a small idea has now grown into a
-            next-generation tutoring platform designed for Bangladeshi students.
+            difficult to reach the right students.
+            <br />
+            <br />
+            What started as a small idea has now grown into a next-generation
+            tutoring platform designed for Bangladeshi students.
           </p>
         </div>
       </section>
@@ -66,16 +70,16 @@ const About = () => {
         {[
           {
             title: "Verified & Trusted Tutors",
-            text: "Every tutor goes through a verification process for authenticity and safety."
+            text: "Every tutor goes through a verification process for authenticity and safety.",
           },
           {
             title: "Smart Learning Tools",
-            text: "Profile matching, rating systems, digital payments and more."
+            text: "Profile matching, rating systems, digital payments and more.",
           },
           {
             title: "Built for Bangladesh",
-            text: "A platform tailored specifically for Bangladeshi students, parents, and teachers."
-          }
+            text: "A platform tailored specifically for Bangladeshi students, parents, and teachers.",
+          },
         ].map((item, i) => (
           <div key={i} className="p-6 bg-base-100 shadow-md rounded-xl">
             <h3 className="text-xl font-semibold">{item.title}</h3>
@@ -126,7 +130,7 @@ const About = () => {
           Whether you are a student or a tutor, your journey starts here.
         </p>
 
-        <button className="btn mt-6 bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg hover:scale-105">
+        <button className="btn mt-6 bg-linear-to-r from-indigo-500 to-purple-600 text-white shadow-lg hover:scale-105">
           Get Started
         </button>
       </section>
