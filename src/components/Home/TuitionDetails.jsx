@@ -76,7 +76,7 @@ const TuitionDetails = () => {
             </div>
             <div>
               <p className="text-sm opacity-80">Duration</p>
-              <p className="font-semibold">2 hours / class</p>
+              <p className="font-semibold">{tuition.duration} hours / class</p>
             </div>
             <div>
               <p className="text-sm opacity-80">Start Date</p>

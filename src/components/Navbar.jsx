@@ -88,7 +88,7 @@ const Navbar = () => {
               {user ? (
                 <>
                   <li>
-                    <NavLink to="/dashboard">Dashboard</NavLink>
+                    <NavLink to="/dashboard/home">Dashboard</NavLink>
                   </li>
                   <li>
                     <button className="text-red-500" onClick={handleLogout}>
@@ -122,7 +122,7 @@ const Navbar = () => {
               <>
                 <NavLink
                   className="btn btn-sm bg-linear-to-r from-indigo-500 to-purple-600 text-white"
-                  to="/dashboard"
+                  to="/dashboard/home"
                 >
                   Dashboard
                 </NavLink>
