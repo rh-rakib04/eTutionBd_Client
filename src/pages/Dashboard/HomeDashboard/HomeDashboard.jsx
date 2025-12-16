@@ -14,7 +14,7 @@ const HomeDashboard = () => {
     return <AdminHome />;
   } else if (role === "tutor") {
     return <TutorHome />;
-  } else {
+  } else if(role ==='student'){
     return <StudentHome />;
   }
 };

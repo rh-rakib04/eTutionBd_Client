@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useParams, Link } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../hooks/useAxios";
 import Loading from "../Loading";
+import useAuth from "../../hooks/useAuth";
+import ApplyTutorModal from "../ApplyTutorModal";
 
 const TuitionDetails = () => {
   const { id } = useParams();
   const axiosInstance = useAxios();
+  const applyModalRef = useRef();
+  const { user } = useAuth();
 
   const {
     data: tuition,
@@ -108,7 +112,10 @@ const TuitionDetails = () => {
           <p className="text-sm text-gray-500 mt-4">Applicants</p>
           <p className="font-semibold">12</p>
 
-          <button className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg mt-5 transition">
+          <button
+            onClick={() => applyModalRef.current.showModal()}
+            className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg mt-5 transition"
+          >
             Apply As Tutor
           </button>
 
@@ -120,6 +127,14 @@ const TuitionDetails = () => {
           </p>
         </div>
       </div>
+      {user && (
+        <ApplyTutorModal
+          modalRef={applyModalRef}
+          tuition={tuition}
+          axiosSecure={axiosInstance}
+          user={user}
+        />
+      )}
     </div>
   );
 };

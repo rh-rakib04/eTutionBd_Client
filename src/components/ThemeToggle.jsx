@@ -21,7 +21,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="relative w-14 h-7 rounded-full bg-base-300 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+      className="relative w-14 h-7 border-2  border-primary rounded-full bg-base-300 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
       aria-label="Toggle theme"
     >
       {/* Toggle slider */}

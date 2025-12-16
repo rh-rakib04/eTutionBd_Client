@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { MapPin, BookOpen } from "lucide-react";
-
 import Swal from "sweetalert2";
 import useAxios from "../../../hooks/useAxios";
 import useAuth from "../../../hooks/useAuth";

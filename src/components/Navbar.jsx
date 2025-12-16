@@ -1,8 +1,9 @@
 import React, { use } from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import toast from "react-hot-toast";
 import { AuthContext } from "../context/AuthContext";
 import ThemeToggle from "./ThemeToggle";
+import { LogOut, User } from "lucide-react";
 
 const Navbar = () => {
   const { user, logOut } = use(AuthContext);
@@ -126,17 +127,35 @@ const Navbar = () => {
                 >
                   Dashboard
                 </NavLink>
-                <div className="avatar">
-                  <div className="w-10 h-10 rounded-full ring ring-indigo-400">
-                    <img src={user.photoURL} />
-                  </div>
+
+                <div className="dropdown dropdown-end">
+                  <label tabIndex={0} className="btn btn-circle avatar">
+                    <img
+                      className="rounded-full"
+                      src={user?.photoURL || "https://i.pravatar.cc/40"}
+                      alt="user"
+                    />
+                  </label>
+                  <ul
+                    tabIndex={0}
+                    className="menu dropdown-content bg-base-100 rounded-box w-44 shadow mt-3"
+                  >
+                    <li>
+                      <Link to="/dashboard/profile">
+                        <User size={16} /> Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <button
+                        className="btn btn-outline btn-sm text-red-500 border-red-300"
+                        onClick={handleLogout}
+                      >
+                        <LogOut size={16} />
+                        Logout
+                      </button>
+                    </li>
+                  </ul>
                 </div>
-                <button
-                  className="btn btn-outline btn-sm text-red-500 border-red-300"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
               </>
             ) : (
               <>

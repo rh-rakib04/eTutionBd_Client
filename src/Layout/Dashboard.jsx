@@ -1,12 +1,30 @@
-import { BookOpen, Home, LogOut, Plus, Settings, User } from "lucide-react";
+import {
+  BookOpen,
+  CreditCard,
+  Home,
+  HomeIcon,
+  LogOut,
+  LucideUsers,
+  Plus,
+  Settings,
+  User,
+} from "lucide-react";
 import React from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
+import ThemeToggle from "../components/ThemeToggle";
 
 const Dashboard = () => {
-  const { user } = useAuth();
+  const { user, logOut } = useAuth();
   const { role } = useRole();
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => toast.success("Logged out successfully!"))
+      .catch((err) => toast.error(err.message));
+  };
+
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -41,38 +59,42 @@ const Dashboard = () => {
                 eTuitionBd
               </span>
             </NavLink>
-            <div>
-              <div className="ml-auto flex items-center gap-3">
-                <div className="text-right hidden sm:block">
-                  <p className="text-sm font-semibold">
-                    {user?.displayName || "User"}
-                  </p>
-                  <p className="text-xs text-gray-500 capitalize">{role}</p>
-                </div>
+            <div className="flex gap-5 items-center">
+              <ThemeToggle />
+              <div>
+                <div className="ml-auto flex items-center gap-3">
+                  <div className="text-right hidden sm:block">
+                    <p className="text-sm font-semibold">
+                      {user?.displayName || "User"}
+                    </p>
+                    <p className="text-xs text-gray-500 capitalize">{role}</p>
+                  </div>
 
-                <div className="dropdown dropdown-end">
-                  <label tabIndex={0} className="btn btn-circle avatar">
-                    <img
-                      className="rounded-full"
-                      src={user?.photoURL || "https://i.pravatar.cc/40"}
-                      alt="user"
-                    />
-                  </label>
-                  <ul
-                    tabIndex={0}
-                    className="menu dropdown-content bg-base-100 rounded-box w-44 shadow mt-3"
-                  >
-                    <li>
-                      <Link to="/dashboard/profile">
-                        <User size={16} /> Profile
-                      </Link>
-                    </li>
-                    <li>
-                      <button className="text-error">
-                        <LogOut size={16} /> Logout
-                      </button>
-                    </li>
-                  </ul>
+                  <div className="dropdown dropdown-end">
+                    <label tabIndex={0} className="btn btn-circle avatar">
+                      <img
+                        className="rounded-full"
+                        src={user?.photoURL || "https://i.pravatar.cc/40"}
+                        alt="user"
+                      />
+                    </label>
+                    <ul
+                      tabIndex={0}
+                      className="menu dropdown-content bg-base-100 rounded-box w-44 shadow mt-3"
+                    >
+                      <li>
+                        <Link to="/dashboard/profile">
+                          <User size={16} /> Profile
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/" className="btn btn-outline ">
+                          <HomeIcon size={16} />
+                          Home
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -106,33 +128,81 @@ const Dashboard = () => {
             </li>
 
             {/* ------------>Student<--------------- */}
-            {/* My tuition*/}
-            <li>
-              <NavLink
-                to="/dashboard/my-tuitions"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="My Tuitions"
-              >
-                <BookOpen />{" "}
-                <span className="is-drawer-close:hidden">My Tuitions</span>
-              </NavLink>
-            </li>
-            {/* post tuition*/}
-            <li>
-              <NavLink
-                to="/dashboard/post-tuition"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Post New"
-              >
-                <Plus />{" "}
-                <span className="is-drawer-close:hidden">Post New</span>
-              </NavLink>
-            </li>
+            {role === "student" && (
+              <>
+                {" "}
+                {/* My tuition*/}
+                <li>
+                  <NavLink
+                    to="/dashboard/my-tuitions"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="My Tuitions"
+                  >
+                    <BookOpen />{" "}
+                    <span className="is-drawer-close:hidden">My Tuitions</span>
+                  </NavLink>
+                </li>
+                {/* post tuition*/}
+                <li>
+                  <NavLink
+                    to="/dashboard/post-tuition"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Post New"
+                  >
+                    <Plus />{" "}
+                    <span className="is-drawer-close:hidden">Post New</span>
+                  </NavLink>
+                </li>
+                {/* Applied Tutor*/}
+                <li>
+                  <NavLink
+                    to="/dashboard/:tuitionId/applied-tutors"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Applied Tutor"
+                  >
+                    <LucideUsers />
+                    <span className="is-drawer-close:hidden">
+                      Applied Tutor
+                    </span>
+                  </NavLink>
+                </li>
+                {/* Payment*/}
+                <li>
+                  <NavLink
+                    to="/dashboard/payment"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Payments"
+                  >
+                    <CreditCard />
+                    <span className="is-drawer-close:hidden">Payments</span>
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            {/* ------------>Tutor<--------------- */}
+            {role === "tutor" && (
+              <>
+                {/* My Application*/}
+                <li>
+                  <NavLink
+                    to="/dashboard/my-application"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="My Application"
+                  >
+                    <BookOpen />{" "}
+                    <span className="is-drawer-close:hidden">
+                      My Application
+                    </span>
+                  </NavLink>
+                </li>
+              </>
+            )}
 
             {/* Settings */}
             <li>
               <NavLink
-                to="/settings"
+                to="/dashboard/settings"
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Settings"
               >

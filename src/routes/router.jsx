@@ -16,6 +16,11 @@ import HomeDashboard from "../pages/Dashboard/HomeDashboard/HomeDashboard";
 import MyTuition from "../pages/Dashboard/StudentDashboard/MyTuition";
 import PostTuitions from "../pages/Dashboard/StudentDashboard/PostTuitions";
 import Setting from "../pages/Dashboard/HomeDashboard/Setting";
+import AppliedTutor from "../pages/Dashboard/StudentDashboard/AppliedTutor";
+import Payment from "../pages/Dashboard/StudentDashboard/Payment/Payment";
+import StudentRoute from "./StudentRoute";
+import TutorRoute from "./TutorRoute";
+import MyApplication from "../pages/Dashboard/TutorDashboard/MyApplication";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +32,7 @@ const router = createBrowserRouter([
         Component: Home,
       },
       {
-        path: "/tuitions",
+        path: "tuitions",
         Component: Tuitions,
       },
       {
@@ -39,7 +44,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/be-a-tutor",
+        path: "be-a-tutor",
         element: (
           <PrivateRoutes>
             <BeATutor />
@@ -47,21 +52,21 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/tutors",
+        path: "tutors",
         Component: Tutors,
       },
       {
-        path: "/about",
+        path: "about",
         Component: About,
       },
       {
-        path: "/contact",
+        path: "contact",
         Component: Contact,
       },
     ],
   },
   {
-    path: "/auth",
+    path: "auth",
     Component: AuthLayout,
     children: [
       {
@@ -75,20 +80,53 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/dashboard",
+    path: "dashboard",
     Component: Dashboard,
     children: [
       {
         path: "home",
         element: <HomeDashboard />,
       },
+      // student route
       {
         path: "my-tuitions",
-        element: <MyTuition />,
+        element: (
+          <StudentRoute>
+            <MyTuition />
+          </StudentRoute>
+        ),
       },
       {
         path: "post-tuition",
-        element: <PostTuitions />,
+        element: (
+          <StudentRoute>
+            <PostTuitions />
+          </StudentRoute>
+        ),
+      },
+      {
+        path: "applied-tutor",
+        element: (
+          <StudentRoute>
+            <AppliedTutor />
+          </StudentRoute>
+        ),
+      },
+      {
+        path: "payment",
+        element: (
+          <StudentRoute>
+            <Payment />
+          </StudentRoute>
+        ),
+      },
+      {
+        path: "my-application",
+        element: (
+          <TutorRoute>
+            <MyApplication />
+          </TutorRoute>
+        ),
       },
       {
         path: "settings",
