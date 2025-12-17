@@ -23,6 +23,7 @@ import TutorRoute from "./TutorRoute";
 import MyApplication from "../pages/Dashboard/TutorDashboard/MyApplication";
 import PaymentSuccess from "../pages/Dashboard/StudentDashboard/Payment/PaymentSuccess";
 import PaymentCancelled from "../pages/Dashboard/StudentDashboard/Payment/PaymentCancelled";
+import OngoingTuition from "../pages/Dashboard/TutorDashboard/OngoingTuition";
 
 const router = createBrowserRouter([
   {
@@ -143,6 +144,14 @@ const router = createBrowserRouter([
         element: (
           <TutorRoute>
             <MyApplication />
+          </TutorRoute>
+        ),
+      },
+      {
+        path: "ongoing-tuition",
+        element: (
+          <TutorRoute>
+            <OngoingTuition />
           </TutorRoute>
         ),
       },

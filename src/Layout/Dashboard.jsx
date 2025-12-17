@@ -196,6 +196,19 @@ const Dashboard = () => {
                     </span>
                   </NavLink>
                 </li>
+                {/* Ongoing Tuition*/}
+                <li>
+                  <NavLink
+                    to="/dashboard/ongoing-tuition"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Ongoing Tuition"
+                  >
+                    <LucideUsers />{" "}
+                    <span className="is-drawer-close:hidden">
+                     Ongoing Tuition
+                    </span>
+                  </NavLink>
+                </li>
               </>
             )}
 
