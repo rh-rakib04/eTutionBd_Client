@@ -156,7 +156,7 @@ const Dashboard = () => {
                 {/* Applied Tutor*/}
                 <li>
                   <NavLink
-                    to="/dashboard/:tuitionId/applied-tutors"
+                    to="/dashboard/applied-tutors"
                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                     data-tip="Applied Tutor"
                   >

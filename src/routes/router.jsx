@@ -21,6 +21,8 @@ import Payment from "../pages/Dashboard/StudentDashboard/Payment/Payment";
 import StudentRoute from "./StudentRoute";
 import TutorRoute from "./TutorRoute";
 import MyApplication from "../pages/Dashboard/TutorDashboard/MyApplication";
+import PaymentSuccess from "../pages/Dashboard/StudentDashboard/Payment/PaymentSuccess";
+import PaymentCancelled from "../pages/Dashboard/StudentDashboard/Payment/PaymentCancelled";
 
 const router = createBrowserRouter([
   {
@@ -105,7 +107,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "applied-tutor",
+        path: "applied-tutors",
         element: (
           <StudentRoute>
             <AppliedTutor />
@@ -117,6 +119,22 @@ const router = createBrowserRouter([
         element: (
           <StudentRoute>
             <Payment />
+          </StudentRoute>
+        ),
+      },
+      {
+        path: "payment-success",
+        element: (
+          <StudentRoute>
+            <PaymentSuccess />
+          </StudentRoute>
+        ),
+      },
+      {
+        path: "payment-cancelled",
+        element: (
+          <StudentRoute>
+            <PaymentCancelled />
           </StudentRoute>
         ),
       },

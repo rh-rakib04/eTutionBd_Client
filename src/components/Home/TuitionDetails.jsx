@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../hooks/useAxios";
 import Loading from "../Loading";
 import useAuth from "../../hooks/useAuth";
-import ApplyTutorModal from "../ApplyTutorModal";
+import ApplyTutorModal from "../../pages/Dashboard/TutorDashboard/ApplyTutorModal";
 
 const TuitionDetails = () => {
   const { id } = useParams();

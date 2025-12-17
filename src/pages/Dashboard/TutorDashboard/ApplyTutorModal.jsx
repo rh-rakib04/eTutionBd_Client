@@ -13,6 +13,7 @@ const ApplyTutorModal = ({ modalRef, tuition, axiosSecure, user }) => {
       location: tuition.location,
       tutorEmail: user.email,
       tutorName: user.displayName,
+      tutorImage: user.photo,
       experience: data.experience,
       qualification: data.qualification,
       expectedSalary: data.expectedSalary,

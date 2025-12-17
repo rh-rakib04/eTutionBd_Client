@@ -1,114 +1,135 @@
-import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import useAxios from "../../../hooks/useAxios";
 import Loading from "../../../components/Loading";
-import { useParams } from "react-router";
+import useAuth from "../../../hooks/useAuth";
 
 const AppliedTutors = () => {
-  const axios = useAxios();
-  const { id } = useParams();
+  const axiosSecure = useAxios();
+  const { user } = useAuth();
 
-  // Fetch tutor applications for a tuition
   const {
-    data: tutors = [],
+    data: applications = [],
     isLoading,
-    isError,
     refetch,
   } = useQuery({
-    queryKey: ["appliedTutors", id],
+    queryKey: ["applied-tutors", user?.email],
+    enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axios.get(`/applications/tuition/${id}`);
+      const res = await axiosSecure.get(
+        `/applications/student?email=${user.email}`
+      );
       return res.data;
     },
   });
 
-  const handleApprove = async (applicationId) => {
-    try {
-      await axios.patch(`/applications/${applicationId}`, {
-        status: "accepted",
-      });
-      Swal.fire("Success!", "Tutor approved successfully.", "success");
-      refetch(); // refresh the list
-    } catch (error) {
-      Swal.fire(
-        "Error!",
-        error.response?.data?.message || "Something went wrong.",
-        "error"
-      );
-    }
-  };
-
-  const handleReject = async (applicationId) => {
-    try {
-      await axios.patch(`/applications/${applicationId}`, {
-        status: "rejected",
-      });
-      Swal.fire("Rejected!", "Tutor rejected successfully.", "info");
-      refetch(); // refresh the list
-    } catch (error) {
-      Swal.fire(
-        "Error!",
-        error.response?.data?.message || "Something went wrong.",
-        "error"
-      );
-    }
-  };
-
   if (isLoading) return <Loading />;
-  if (isError) return <p>Error loading tutors.</p>;
-  if (!tutors.length) return <p>No tutors have applied yet.</p>;
+
+  if (applications.length === 0) {
+    return <p className="text-center mt-10">No applications yet</p>;
+  }
+
+  // ✅ Approve Tutor
+  const handleApprove = async (app) => {
+    Swal.fire({
+      title: "Proceed to Payment?",
+      text: `Approve tutor by paying ৳${app.expectedSalary}`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Pay for Approve",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          // Create Stripe checkout session
+          const res = await axiosSecure.post("/create-tutor-checkout-session", {
+            amount: app.expectedSalary,
+            tutorName: app.tutorName,
+            studentEmail: user.email,
+            subject: app.subject,
+            applicationId: app._id,
+            tuitionId: app.tuitionId,
+          });
+
+          // Redirect to Stripe
+          window.location.replace(res.data.url);
+        } catch (error) {
+          console.error(error);
+          Swal.fire(
+            "Error!",
+            "Failed to initiate payment. Try again.",
+            "error"
+          );
+        }
+      }
+    });
+  };
+
+  // ❌ Reject Tutor
+  const handleReject = async (id) => {
+    await axiosSecure.patch(`/applications/reject/${id}`);
+    refetch();
+    Swal.fire("Rejected", "Tutor rejected", "success");
+  };
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Applied Tutors</h2>
+    <div>
+      <h2 className="text-2xl font-bold mb-5">Applied Tutors</h2>
 
-      <div className="overflow-x-auto bg-base-100 rounded-xl shadow border">
-        <table className="table table-zebra w-full">
-          <thead className="bg-base-200">
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Qualifications</th>
+      <div className="overflow-x-auto">
+        <table className="table table-zebra text-center">
+          <thead>
+            <tr className="text-accent">
+              <th>Tuition Name</th>
+              <th>Tutor</th>
+              <th>Qualification</th>
               <th>Experience</th>
               <th>Expected Salary</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
+
           <tbody>
-            {tutors.map((tutor, idx) => (
-              <tr key={tutor._id}>
-                <td>{idx + 1}</td>
-                <td>{tutor.name}</td>
-                <td>{tutor.tutorEmail}</td>
-                <td>{tutor.qualifications}</td>
-                <td>{tutor.experience}</td>
-                <td>৳{tutor.expectedSalary}</td>
+            {applications.map((app) => (
+              <tr key={app._id}>
+                <td className="font-bold text-secondary text-xl">
+                  {app.subject}
+                </td>
+                <td>
+                  <span>{app.tutorName}</span>
+                </td>
+
+                <td>{app.qualification}</td>
+                <td>{app.experience} yrs</td>
+                <td>৳{app.expectedSalary}</td>
+
                 <td>
                   <span
                     className={`badge ${
-                      tutor.status === "pending"
+                      app.status === "pending"
                         ? "badge-warning"
-                        : tutor.status === "accepted"
+                        : app.status === "approved"
                         ? "badge-success"
                         : "badge-error"
                     }`}
                   >
-                    {tutor.status}
+                    {app.status}
                   </span>
                 </td>
-                <td>
+
+                <td className="flex gap-2">
                   <button
-                    onClick={() => handleApprove(tutor._id)}
-                    className="btn btn-xs btn-success mr-2"
+                    onClick={() => handleApprove(app)}
+                    className="btn btn-xs btn-success"
+                    disabled={app.status !== "pending"}
                   >
                     Approve
                   </button>
+
                   <button
-                    onClick={() => handleReject(tutor._id)}
+                    onClick={() => handleReject(app._id)}
                     className="btn btn-xs btn-error"
+                    disabled={app.status !== "pending"}
                   >
                     Reject
                   </button>
