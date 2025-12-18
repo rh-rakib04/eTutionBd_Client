@@ -156,7 +156,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "settings",
+        path: "setting",
         element: <Setting />,
       },
     ],

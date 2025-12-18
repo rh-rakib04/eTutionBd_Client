@@ -16,14 +16,8 @@ import useRole from "../hooks/useRole";
 import ThemeToggle from "../components/ThemeToggle";
 
 const Dashboard = () => {
-  const { user, logOut } = useAuth();
+  const { user } = useAuth();
   const { role } = useRole();
-
-  const handleLogout = () => {
-    logOut()
-      .then(() => toast.success("Logged out successfully!"))
-      .catch((err) => toast.error(err.message));
-  };
 
   return (
     <div className="drawer lg:drawer-open">
@@ -83,7 +77,7 @@ const Dashboard = () => {
                       className="menu dropdown-content bg-base-100 rounded-box w-44 shadow mt-3"
                     >
                       <li>
-                        <Link to="/dashboard/profile">
+                        <Link to="/dashboard/setting">
                           <User size={16} /> Profile
                         </Link>
                       </li>
@@ -205,7 +199,7 @@ const Dashboard = () => {
                   >
                     <LucideUsers />{" "}
                     <span className="is-drawer-close:hidden">
-                     Ongoing Tuition
+                      Ongoing Tuition
                     </span>
                   </NavLink>
                 </li>
@@ -215,12 +209,12 @@ const Dashboard = () => {
             {/* Settings */}
             <li>
               <NavLink
-                to="/dashboard/settings"
+                to="/dashboard/setting"
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Settings"
+                data-tip="Profile Settings"
               >
                 <Settings />
-                <span className="is-drawer-close:hidden">Settings</span>
+                <span className="is-drawer-close:hidden">Profile Settings</span>
               </NavLink>
             </li>
           </ul>
