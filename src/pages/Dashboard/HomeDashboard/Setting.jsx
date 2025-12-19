@@ -61,7 +61,7 @@ const Setting = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto bg-white rounded-xl p-6 shadow">
+    <div className="max-w-2xl mx-auto bg-base-200  rounded-xl p-6 shadow">
       <h2 className="text-xl font-semibold mb-6">Profile Information</h2>
 
       {/* Avatar */}
@@ -72,41 +72,43 @@ const Setting = () => {
         />
         <div>
           <p className="font-medium">Profile Picture</p>
-          <p className="text-sm text-gray-500">JPG, PNG or GIF. Max 10MB</p>
+          <p className="text-sm ">JPG, PNG or GIF. Max 10MB</p>
         </div>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <label>Photo Url</label>
         <input
           {...register("photoURL")}
           className="input input-bordered w-full"
           placeholder="Photo URL"
         />
-
+        <label>Name</label>
         <input
           {...register("displayName")}
           className="input input-bordered w-full"
           placeholder="Full Name"
         />
-
+        <label>Email</label>
         <input
           {...register("email")}
           disabled
-          className="input input-bordered w-full bg-gray-100"
+          placeholder="Email"
+          className="input input-bordered w-full"
         />
-
+        <label>Phone Number</label>
         <input
           {...register("phone")}
           className="input input-bordered w-full"
           placeholder="Phone"
         />
-
+        <label>Address</label>
         <input
           {...register("address")}
           className="input input-bordered w-full"
           placeholder="Location"
         />
-
+        <label>Bio</label>
         <textarea
           {...register("bio")}
           className="textarea textarea-bordered w-full"

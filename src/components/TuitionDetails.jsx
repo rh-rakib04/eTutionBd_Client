@@ -1,13 +1,15 @@
 import React, { useRef } from "react";
 import { useParams, Link } from "react-router";
 import { useQuery } from "@tanstack/react-query";
-import useAxios from "../../hooks/useAxios";
-import Loading from "../Loading";
-import useAuth from "../../hooks/useAuth";
-import ApplyTutorModal from "../../pages/Dashboard/TutorDashboard/ApplyTutorModal";
+import useAxios from "../hooks/useAxios";
+import Loading from "./Loading";
+import useAuth from "../hooks/useAuth";
+import ApplyTutorModal from "../pages/Dashboard/TutorDashboard/ApplyTutorModal";
+import useRole from "../hooks/useRole";
 
 const TuitionDetails = () => {
   const { id } = useParams();
+  const {role} = useRole();
   const axiosInstance = useAxios();
   const applyModalRef = useRef();
   const { user } = useAuth();
@@ -113,8 +115,16 @@ const TuitionDetails = () => {
           <p className="font-semibold">12</p>
 
           <button
-            onClick={() => applyModalRef.current.showModal()}
-            className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg mt-5 transition"
+            onClick={() =>
+              role === "tutor" && applyModalRef.current.showModal()
+            }
+            disabled={role === "student"} // 🔑 disables for students
+            className={`w-full py-2 rounded-lg mt-5 transition 
+    ${
+      role === "tutor"
+        ? "bg-purple-600 hover:bg-purple-700 text-white"
+        : "bg-gray-400 text-gray-700 cursor-not-allowed"
+    }`}
           >
             Apply As Tutor
           </button>

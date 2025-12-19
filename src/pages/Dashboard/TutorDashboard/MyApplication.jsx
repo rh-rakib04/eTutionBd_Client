@@ -17,9 +17,7 @@ const MyApplications = () => {
     queryKey: ["myApplications", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/applications/tutor?email=${user.email}`
-      );
+      const res = await axiosSecure.get(`/applications/tutor?email=${user.email}`);
       return res.data;
     },
   });
@@ -30,12 +28,13 @@ const MyApplications = () => {
   if (applications.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-[70vh] text-center">
-        <BookOpen size={60} className="text-gray-400 mb-4" />
-        <h2 className="text-2xl font-bold mb-2">No Applications Yet</h2>
-        <p className="text-gray-500">You haven’t applied to any tuition yet.</p>
+        <BookOpen size={60} className="text-secondary mb-4" />
+        <h2 className="text-2xl font-bold mb-2 text-primary">No Applications Yet</h2>
+        <p className="text-base-content">You haven’t applied to any tuition yet.</p>
       </div>
     );
   }
+
   // Update application
   const handleUpdate = async (id) => {
     const { value: salary } = await Swal.fire({
@@ -51,7 +50,6 @@ const MyApplications = () => {
         await axiosSecure.patch(`/applications/${id}`, {
           expectedSalary: Number(salary),
         });
-
         Swal.fire("Updated!", "Application updated successfully", "success");
         refetch();
       } catch (error) {
@@ -59,6 +57,7 @@ const MyApplications = () => {
       }
     }
   };
+
   // Delete application
   const handleDelete = async (id) => {
     const result = await Swal.fire({
@@ -82,12 +81,12 @@ const MyApplications = () => {
   };
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-6">My Applications</h2>
+    <div className="p-6">
+      <h2 className="text-3xl font-bold mb-6 text-primary">My Applications</h2>
 
-      <div className="overflow-x-auto bg-base-100 rounded-xl shadow border">
-        <table className="table table-zebra">
-          <thead className="bg-base-200">
+      <div className="overflow-x-auto bg-base-200 rounded-xl shadow-lg border border-base-300">
+        <table className="table w-full">
+          <thead className="bg-primary text-primary-content">
             <tr>
               <th>#</th>
               <th>Tuition</th>
@@ -101,25 +100,28 @@ const MyApplications = () => {
 
           <tbody>
             {applications.map((app, index) => (
-              <tr key={app._id}>
+              <tr
+                key={app._id}
+                className={index % 2 === 0 ? "bg-base-100" : "bg-base-300"}
+              >
                 <td>{index + 1}</td>
 
                 <td>
-                  <p className="font-semibold">
+                  <p className="font-semibold text-secondary">
                     {app.subject} — Class {app.classLevel}
                   </p>
                 </td>
 
                 <td>{app.location}</td>
 
-                <td>৳{app.expectedSalary}</td>
+                <td className="text-primary font-semibold">৳{app.expectedSalary}</td>
 
                 <td>
                   <span
                     className={`badge ${
                       app.status === "pending"
                         ? "badge-warning"
-                        : app.status === "accepted"
+                        : app.status === "approved"
                         ? "badge-success"
                         : "badge-error"
                     }`}
@@ -133,9 +135,9 @@ const MyApplications = () => {
                 <td className="flex gap-2">
                   <button
                     onClick={() => handleUpdate(app._id)}
-                    disabled={app.status === "accepted"}
-                    className={`btn btn-xs btn-outline ${
-                      app.status === "accepted" ? "btn-disabled" : ""
+                    disabled={app.status === "approved"}
+                    className={`btn btn-xs btn-outline btn-primary ${
+                      app.status === "approved" ? "btn-disabled" : ""
                     }`}
                   >
                     Update
@@ -143,14 +145,13 @@ const MyApplications = () => {
 
                   <button
                     onClick={() => handleDelete(app._id)}
-                    disabled={app.status === "accepted"}
-                    className={`btn btn-xs btn-outline text-error ${
-                      app.status === "accepted" ? "btn-disabled" : ""
+                    disabled={app.status === "approved"}
+                    className={`btn btn-xs btn-outline btn-error flex items-center gap-1 ${
+                      app.status === "approved" ? "btn-disabled" : ""
                     }`}
                   >
                     <Trash2 size={14} /> Delete
                   </button>
-                 
                 </td>
               </tr>
             ))}

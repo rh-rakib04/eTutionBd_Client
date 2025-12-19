@@ -1,6 +1,7 @@
 import {
   BookOpen,
   CreditCard,
+  CreditCardIcon,
   Home,
   HomeIcon,
   LogOut,
@@ -14,6 +15,7 @@ import { Link, NavLink, Outlet } from "react-router";
 import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
 import ThemeToggle from "../components/ThemeToggle";
+import { TbCash } from "react-icons/tb";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -200,6 +202,50 @@ const Dashboard = () => {
                     <LucideUsers />{" "}
                     <span className="is-drawer-close:hidden">
                       Ongoing Tuition
+                    </span>
+                  </NavLink>
+                </li>
+                {/* Revenue History*/}
+                <li>
+                  <NavLink
+                    to="/dashboard/revenue-history"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Revenue History"
+                  >
+                    <CreditCardIcon />{" "}
+                    <span className="is-drawer-close:hidden">
+                      Revenue History
+                    </span>
+                  </NavLink>
+                </li>
+              </>
+            )}
+            {/* ------------>Admin<--------------- */}
+            {role === "admin" && (
+              <>
+                {/* User Management*/}
+                <li>
+                  <NavLink
+                    to="/dashboard/user-management"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="User Management"
+                  >
+                    <LucideUsers />{" "}
+                    <span className="is-drawer-close:hidden">
+                      User Management
+                    </span>
+                  </NavLink>
+                </li>
+                {/* Tuition Management*/}
+                <li>
+                  <NavLink
+                    to="/dashboard/tuition-management"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Tuition Management"
+                  >
+                    <BookOpen />{" "}
+                    <span className="is-drawer-close:hidden">
+                      Tuition Management
                     </span>
                   </NavLink>
                 </li>

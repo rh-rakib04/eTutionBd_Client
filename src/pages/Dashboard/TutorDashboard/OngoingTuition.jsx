@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../../hooks/useAxios";
 import useAuth from "../../../hooks/useAuth";
 import Loading from "../../../components/Loading";
-
+import { BookOpen } from "lucide-react";
 
 const OngoingTuition = () => {
   const axiosSecure = useAxios();
@@ -21,20 +21,25 @@ const OngoingTuition = () => {
 
   if (isLoading) return <Loading />;
 
+  /* 🟡 Empty State */
   if (tuitions.length === 0) {
     return (
-      <p className="text-center mt-10 text-gray-500">No ongoing tuitions yet</p>
+      <div className="flex flex-col items-center justify-center h-[70vh] text-center">
+        <BookOpen size={60} className="text-secondary mb-4" />
+        <h2 className="text-2xl font-bold mb-2 text-primary">No Ongoing Tuitions</h2>
+        <p className="text-base-content">You don’t have any active tuition assignments yet.</p>
+      </div>
     );
   }
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-5">My Ongoing Tuitions</h2>
+    <div className="p-6">
+      <h2 className="text-3xl font-bold mb-6 text-primary">My Ongoing Tuitions</h2>
 
-      <div className="overflow-x-auto">
-        <table className="table table-zebra text-center">
-          <thead>
-            <tr className="text-accent">
+      <div className="overflow-x-auto bg-base-200 rounded-xl shadow-lg border border-base-300">
+        <table className="table w-full text-left">
+          <thead className="bg-primary text-primary-content">
+            <tr>
               <th>Subject</th>
               <th>Class</th>
               <th>Location</th>
@@ -45,12 +50,15 @@ const OngoingTuition = () => {
           </thead>
 
           <tbody>
-            {tuitions.map((t) => (
-              <tr key={t.applicationId}>
-                <td className="font-semibold">{t.subject}</td>
+            {tuitions.map((t, i) => (
+              <tr
+                key={t.applicationId}
+                className={i % 2 === 0 ? "bg-base-100" : "bg-base-300"}
+              >
+                <td className="font-semibold text-secondary">{t.subject}</td>
                 <td>{t.classLevel}</td>
                 <td>{t.location}</td>
-                <td>৳{t.salary}</td>
+                <td className="text-primary font-semibold">৳{t.salary}</td>
                 <td>{t.studentEmail}</td>
                 <td>
                   <span className="badge badge-success">Ongoing</span>

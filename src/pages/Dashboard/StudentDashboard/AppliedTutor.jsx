@@ -44,6 +44,7 @@ const AppliedTutors = () => {
           const res = await axiosSecure.post("/create-tutor-checkout-session", {
             amount: app.expectedSalary,
             tutorName: app.tutorName,
+            tutorEmail: app.tutorEmail,
             studentEmail: user.email,
             subject: app.subject,
             applicationId: app._id,

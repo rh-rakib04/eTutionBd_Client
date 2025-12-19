@@ -9,7 +9,6 @@ import AuthLayout from "../Layout/AuthLayout";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import PrivateRoutes from "../routes/PrivateRoutes";
-import TuitionDetails from "../components/Home/TuitionDetails";
 import BeATutor from "../pages/BeATutor";
 import Dashboard from "../Layout/Dashboard";
 import HomeDashboard from "../pages/Dashboard/HomeDashboard/HomeDashboard";
@@ -20,10 +19,15 @@ import AppliedTutor from "../pages/Dashboard/StudentDashboard/AppliedTutor";
 import Payment from "../pages/Dashboard/StudentDashboard/Payment/Payment";
 import StudentRoute from "./StudentRoute";
 import TutorRoute from "./TutorRoute";
+import AdminRoute from "./AdminRoute";
 import MyApplication from "../pages/Dashboard/TutorDashboard/MyApplication";
 import PaymentSuccess from "../pages/Dashboard/StudentDashboard/Payment/PaymentSuccess";
 import PaymentCancelled from "../pages/Dashboard/StudentDashboard/Payment/PaymentCancelled";
 import OngoingTuition from "../pages/Dashboard/TutorDashboard/OngoingTuition";
+import UserManagement from "../pages/Dashboard/AdminDashboard/UserManagement";
+import TuitionManagement from "../pages/Dashboard/AdminDashboard/TuitionManagement";
+import RevenueHistory from "../pages/Dashboard/TutorDashboard/RevenueHistory";
+import TuitionDetails from "../components/TuitionDetails";
 
 const router = createBrowserRouter([
   {
@@ -153,6 +157,30 @@ const router = createBrowserRouter([
           <TutorRoute>
             <OngoingTuition />
           </TutorRoute>
+        ),
+      },
+      {
+        path: "revenue-history",
+        element: (
+          <TutorRoute>
+            <RevenueHistory />
+          </TutorRoute>
+        ),
+      },
+      {
+        path: "user-management",
+        element: (
+          <AdminRoute>
+            <UserManagement />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "tuition-management",
+        element: (
+          <AdminRoute>
+            <TuitionManagement />
+          </AdminRoute>
         ),
       },
       {
