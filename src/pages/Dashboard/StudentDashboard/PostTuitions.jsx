@@ -12,13 +12,12 @@ const PostTuition = () => {
   const onSubmit = async (data) => {
     const tuitionData = {
       ...data,
-      status: "open",
-      createdAt: new Date(),
+      studentEmail: user.email,   
     };
 
     try {
       await axios.post("/tuitions", tuitionData);
-      Swal.fire("Success 🎉", "Tuition posted successfully", "success");
+      Swal.fire("Success 🎉", "Tuition sent for admin approval", "success");
       reset();
     } catch (error) {
       Swal.fire("Error ❌", "Failed to post tuition", "error");

@@ -1,64 +1,90 @@
 // PaymentSuccess.jsx
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router";
 import useAxios from "../../../../hooks/useAxios";
+import { CheckCircle, XCircle, Loader } from "lucide-react";
 
 const PaymentSuccess = () => {
   const axios = useAxios();
-  const [tuitionName, setTuitionName] = useState("");
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState("Processing payment...");
 
-  useEffect(() => {
-    const processPayment = async () => {
-      const sessionId = new URLSearchParams(window.location.search).get(
-        "session_id"
+  // Get session_id from URL
+  const sessionId = new URLSearchParams(window.location.search).get(
+    "session_id"
+  );
+
+  // TanStack Query for payment verification
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["payment-success", sessionId],
+    enabled: !!sessionId,
+    queryFn: async () => {
+      const res = await axios.patch(
+        `/tutor-payment-success?session_id=${sessionId}`
       );
-      if (!sessionId) {
-        setMessage("No session ID found. Payment could not be verified.");
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const res = await axios.patch(
-          `/tutor-payment-success?session_id=${sessionId}`
-        );
-
-        if (res.data.success) {
-          setTuitionName(res.data.subject); // store tuition name
-          setMessage(
-            `Payment successful! Tutor approved for "${res.data.subject}"`
-          );
-          setTimeout(() => navigate("/dashboard/applied-tutors"), 2000);
-        } else {
-          setMessage(res.data.message || "Payment verification failed.");
-        }
-      } catch (error) {
-        console.error(error);
-        setMessage("Something went wrong while processing payment.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    processPayment();
-  }, [navigate]);
+      return res.data;
+    },
+  });
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      {!loading && (
-        <div className="bg-white p-8 rounded shadow-md text-center">
-          <h1 className="text-2xl font-bold mb-4">{message}</h1>
-          {tuitionName && (
-            <p className="text-lg text-gray-700">Tuition: {subject}</p>
-          )}
-          <p className="text-gray-600 mt-2">
-            Redirecting you to your applied tutors page...
-          </p>
-        </div>
-      )}
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-green-50 to-blue-100 p-6">
+      <div className="bg-white p-10 rounded-xl shadow-lg text-center animate-fadeIn w-full max-w-md">
+        {isLoading && (
+          <div className="flex flex-col items-center">
+            <Loader size={48} className="animate-spin text-primary mb-4" />
+            <h1 className="text-xl font-semibold text-gray-700">
+              Processing payment...
+            </h1>
+          </div>
+        )}
+
+        {!isLoading && isError && (
+          <>
+            <XCircle
+              size={64}
+              className="text-red-500 mx-auto mb-4 animate-pulse"
+            />
+            <h1 className="text-2xl font-bold mb-4">
+              Something went wrong while processing payment.
+            </h1>
+          </>
+        )}
+
+        {!isLoading && !isError && (
+          <>
+            {data?.success ? (
+              <>
+                <CheckCircle
+                  size={64}
+                  className="text-green-500 mx-auto mb-4 animate-bounce"
+                />
+                <h1 className="text-2xl font-bold mb-4">
+                  Payment successful! Tutor approved for "
+                  {data.tuitionName || data.subject}"
+                </h1>
+              </>
+            ) : (
+              <>
+                <XCircle
+                  size={64}
+                  className="text-red-500 mx-auto mb-4 animate-pulse"
+                />
+                <h1 className="text-2xl font-bold mb-4">
+                  {data?.message || "Payment verification failed."}
+                </h1>
+              </>
+            )}
+
+            <div className="flex flex-col gap-3 mt-6">
+              <Link to="/dashboard/payment" className="btn btn-primary w-full">
+                View Payment History
+              </Link>
+              <Link to="/dashboard/home" className="btn btn-secondary w-full">
+                Go to Dashboard Home
+              </Link>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 };

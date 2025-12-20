@@ -3,6 +3,15 @@ import Swal from "sweetalert2";
 import useAxios from "../../../hooks/useAxios";
 import Loading from "../../../components/Loading";
 import useAuth from "../../../hooks/useAuth";
+import {
+  User,
+  GraduationCap,
+  Briefcase,
+  DollarSign,
+  CheckCircle,
+  XCircle,
+  Clock,
+} from "lucide-react";
 
 const AppliedTutors = () => {
   const axiosSecure = useAxios();
@@ -26,21 +35,28 @@ const AppliedTutors = () => {
   if (isLoading) return <Loading />;
 
   if (applications.length === 0) {
-    return <p className="text-center mt-10">No applications yet</p>;
+    return (
+      <div className="flex flex-col items-center justify-center h-[60vh] text-center">
+        <User size={64} className="text-gray-400 mb-4" />
+        <h2 className="text-2xl font-bold mb-2">No Applications Yet</h2>
+        <p className="text-gray-500">
+          Tutors haven’t applied to your tuitions yet.
+        </p>
+      </div>
+    );
   }
 
-  // ✅ Approve Tutor
+  // Approve Tutor
   const handleApprove = async (app) => {
     Swal.fire({
       title: "Proceed to Payment?",
-      text: `Approve tutor by paying ৳${app.expectedSalary}`,
+      text: `Approve ${app.tutorName} by paying ৳${app.expectedSalary}`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Pay for Approve",
+      confirmButtonText: "Pay & Approve",
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          // Create Stripe checkout session
           const res = await axiosSecure.post("/create-tutor-checkout-session", {
             amount: app.expectedSalary,
             tutorName: app.tutorName,
@@ -50,8 +66,6 @@ const AppliedTutors = () => {
             applicationId: app._id,
             tuitionId: app.tuitionId,
           });
-
-          // Redirect to Stripe
           window.location.replace(res.data.url);
         } catch (error) {
           console.error(error);
@@ -65,44 +79,47 @@ const AppliedTutors = () => {
     });
   };
 
-  // ❌ Reject Tutor
+  //  Reject Tutor
   const handleReject = async (id) => {
     await axiosSecure.patch(`/applications/reject/${id}`);
     refetch();
-    Swal.fire("Rejected", "Tutor rejected", "success");
+    Swal.fire("Rejected", "Tutor rejected successfully", "success");
   };
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-5">Applied Tutors</h2>
+    <div className="bg-base-100 rounded-xl shadow-lg p-6">
+      <h2 className="text-3xl font-bold text-primary mb-6">Applied Tutors</h2>
 
       <div className="overflow-x-auto">
-        <table className="table table-zebra text-center">
-          <thead>
-            <tr className="text-accent">
-              <th>Tuition Name</th>
+        <table className="table w-full border border-base-300 rounded-lg shadow-sm text-center">
+          <thead className="bg-base-200 text-base-content">
+            <tr>
+              <th>Tuition</th>
               <th>Tutor</th>
               <th>Qualification</th>
               <th>Experience</th>
               <th>Expected Salary</th>
               <th>Status</th>
-              <th>Action</th>
+              <th className="text-center">Actions</th>
             </tr>
           </thead>
 
           <tbody>
             {applications.map((app) => (
-              <tr key={app._id}>
-                <td className="font-bold text-secondary text-xl">
-                  {app.subject}
+              <tr key={app._id} className="hover:bg-base-100 transition">
+                <td className="font-semibold text-secondary">{app.subject}</td>
+                <td>{app.tutorName}</td>
+                <td>
+                  <GraduationCap size={14} className="inline mr-1" />{" "}
+                  {app.qualification}
                 </td>
                 <td>
-                  <span>{app.tutorName}</span>
+                  <Briefcase size={14} className="inline mr-1" />{" "}
+                  {app.experience} yrs
                 </td>
-
-                <td>{app.qualification}</td>
-                <td>{app.experience} yrs</td>
-                <td>৳{app.expectedSalary}</td>
+                <td className="text-primary font-bold">
+                  ৳ {app.expectedSalary}
+                </td>
 
                 <td>
                   <span
@@ -111,14 +128,16 @@ const AppliedTutors = () => {
                         ? "badge-warning"
                         : app.status === "approved"
                         ? "badge-success"
-                        : "badge-error"
+                        : app.status === "rejected"
+                        ? "badge-error"
+                        : "badge-ghost"
                     }`}
                   >
                     {app.status}
                   </span>
                 </td>
 
-                <td className="flex gap-2">
+                <td className="flex gap-2 justify-center">
                   <button
                     onClick={() => handleApprove(app)}
                     className="btn btn-xs btn-success"
@@ -126,7 +145,6 @@ const AppliedTutors = () => {
                   >
                     Approve
                   </button>
-
                   <button
                     onClick={() => handleReject(app._id)}
                     className="btn btn-xs btn-error"

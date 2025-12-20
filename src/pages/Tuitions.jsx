@@ -15,7 +15,7 @@ const Tuitions = () => {
   } = useQuery({
     queryKey: ["tuitions"],
     queryFn: async () => {
-      const res = await axios.get("/tuitions");
+      const res = await axios.get(`/tuitions?status=approved`);
       return res.data;
     },
   });

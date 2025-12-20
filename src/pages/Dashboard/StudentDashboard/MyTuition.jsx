@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { BookOpen, Eye, Pencil, Plus, Trash2 } from "lucide-react";
+import { Eye, Pencil, Plus, Trash2, BookOpen } from "lucide-react";
 import { Link } from "react-router";
 import useAxios from "../../../hooks/useAxios";
 import useAuth from "../../../hooks/useAuth";
@@ -26,7 +26,7 @@ const MyTuition = () => {
     enabled: !!user?.email,
   });
 
-  //Open modal
+  // Open modal
   const handleEditModalOpen = (tuition) => {
     setSelectedTuition(tuition);
     reset({
@@ -46,7 +46,6 @@ const MyTuition = () => {
         `/tuitions/${selectedTuition._id}`,
         data
       );
-
       if (res.data.modifiedCount > 0) {
         refetch();
         editModalRef.current.close();
@@ -62,7 +61,7 @@ const MyTuition = () => {
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "This tuition will be permanently deleted.",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -71,19 +70,15 @@ const MyTuition = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure.delete(`/tuitions/${id}`).then((res) => {
-          console.log(res.data);
           if (res.data.deletedCount) {
             refetch();
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your Tuition has been deleted.",
-              icon: "success",
-            });
+            Swal.fire("Deleted!", "Your tuition has been removed.", "success");
           }
         });
       }
     });
   };
+
   if (loading) return <Loading />;
 
   // Empty state
@@ -103,113 +98,141 @@ const MyTuition = () => {
   }
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-6">My Tuitions</h2>
-
-      <div className="space-y-4">
-        {tuitions.map((tuition) => (
-          <div
-            key={tuition._id}
-            className="bg-base-100 border rounded-xl p-5 shadow-sm hover:shadow-md transition"
-          >
-            <div className="flex justify-between">
-              <div>
-                <h3 className="text-lg font-semibold">
-                  {tuition.subject} - Class {tuition.classLevel}
-                </h3>
-                <p className="text-sm text-gray-500">
-                  • {tuition.location} • TK {tuition.salary}
-                </p>
-              </div>
-
-              <span
-                className={`px-3 py-1 text-xs rounded-full ${
-                  tuition.status === "active"
-                    ? "bg-green-100 text-green-700"
-                    : "bg-gray-200 text-gray-600"
-                }`}
-              >
-                {tuition.status}
-              </span>
-            </div>
-
-            <div className="flex gap-3 mt-4">
-              <Link
-                to={`/tuitions/${tuition._id}`}
-                className="btn btn-sm btn-outline"
-              >
-                <Eye size={16} /> View
-              </Link>
-
-              <button
-                onClick={() => handleEditModalOpen(tuition)}
-                className="btn btn-sm btn-outline"
-              >
-                <Pencil size={16} /> Edit
-              </button>
-
-              <button
-                onClick={() => handleDelete(tuition._id)}
-                className="btn btn-sm btn-outline text-error border-error"
-              >
-                <Trash2 size={16} /> Delete
-              </button>
-            </div>
-          </div>
-        ))}
+    <div className="bg-base-100 rounded-xl shadow-lg p-6 h-full">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-3xl font-bold text-primary">My Tuitions</h2>
+        <Link to="/dashboard/post-tuition" className="btn btn-primary">
+          <Plus size={18} /> Post Tuition
+        </Link>
       </div>
 
-      {/* 🔹 Edit Modal */}
-      <dialog ref={editModalRef} className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg mb-4">Edit Tuition</h3>
+      <div className="overflow-x-auto  h-[70vh]">
+        <table className="table w-full border border-base-300 rounded-lg shadow-sm">
+          <thead className="bg-base-200 text-base-content">
+            <tr>
+              <th>Subject</th>
+              <th>Class</th>
+              <th>Location</th>
+              <th>Salary</th>
+              <th>Status</th>
+              <th className="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tuitions.map((tuition) => (
+              <tr key={tuition._id} className="hover:bg-base-100 transition">
+                <td className="font-semibold text-secondary">
+                  {tuition.subject}
+                </td>
+                <td>{tuition.classLevel}</td>
+                <td>{tuition.location}</td>
+                <td className="text-primary font-bold">৳ {tuition.salary}</td>
+                <td>
+                  <span
+                    className={`badge ${
+                      tuition.status === "pending"
+                        ? "badge-warning text-warning-content"
+                        : tuition.status === "approved"
+                        ? "badge-success text-success-content"
+                        : tuition.status === "assigned"
+                        ? "badge-info text-info-content"
+                        : tuition.status === "ongoing"
+                        ? "badge-primary text-primary-content"
+                        : tuition.status === "completed"
+                        ? "badge-neutral text-neutral-content"
+                        : tuition.status === "rejected"
+                        ? "badge-error text-error-content"
+                        : "badge-ghost"
+                    }`}
+                  >
+                    {tuition.status}
+                  </span>
+                </td>
 
-          <form onSubmit={handleSubmit(handleUpdate)} className="space-y-3">
+                <td className="text-center">
+                  <div className="dropdown dropdown-end">
+                    <label tabIndex={0} className="btn btn-sm btn-outline">
+                      Actions
+                    </label>
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-40"
+                    >
+                      <li>
+                        <Link to={`/tuitions/${tuition._id}`}>
+                          <Eye size={14} /> View
+                        </Link>
+                      </li>
+                      <li>
+                        {tuition.status == "pending" && (
+                          <button onClick={() => handleEditModalOpen(tuition)}>
+                            <Pencil size={14} /> Edit
+                          </button>
+                        )}
+                      </li>
+                      <li>
+                        <button
+                          onClick={() => handleDelete(tuition._id)}
+                          className="text-error"
+                        >
+                          <Trash2 size={14} /> Delete
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <dialog ref={editModalRef} className="modal">
+        <form
+          method="dialog"
+          className="modal-box"
+          onSubmit={handleSubmit(handleUpdate)}
+        >
+          <h3 className="font-bold text-lg">Edit Tuition</h3>
+          <div className="form-control mt-4">
+            <label className="label">Subject</label>
+            <input {...register("subject")} className="input input-bordered" />
+          </div>
+          <div className="form-control mt-4">
+            <label className="label">Class Level</label>
             <input
-              {...register("subject", { required: true })}
-              className="input input-bordered w-full"
-              placeholder="Subject"
+              {...register("classLevel")}
+              className="input input-bordered"
             />
-
-            <input
-              {...register("classLevel", { required: true })}
-              className="input input-bordered w-full"
-              placeholder="Class"
-            />
-
-            <input
-              {...register("location", { required: true })}
-              className="input input-bordered w-full"
-              placeholder="Location"
-            />
-
-            <input
-              type="number"
-              {...register("salary", { required: true })}
-              className="input input-bordered w-full"
-              placeholder="Salary"
-            />
-
+          </div>
+          <div className="form-control mt-4">
+            <label className="label">Location</label>
+            <input {...register("location")} className="input input-bordered" />
+          </div>
+          <div className="form-control mt-4">
+            <label className="label">Salary</label>
+            <input {...register("salary")} className="input input-bordered" />
+          </div>
+          <div className="form-control mt-4">
+            <label className="label">Description</label>
             <textarea
               {...register("description")}
-              className="textarea textarea-bordered w-full"
-              placeholder="Description"
-            ></textarea>
+              className="textarea textarea-bordered"
+            />
+          </div>
 
-            <div className="modal-action">
-              <button type="submit" className="btn btn-primary">
-                Update
-              </button>
-              <button
-                type="button"
-                className="btn"
-                onClick={() => editModalRef.current.close()}
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        </div>
+          <div className="modal-action">
+            <button type="submit" className="btn btn-primary">
+              Save
+            </button>
+            <button
+              type="button"
+              className="btn"
+              onClick={() => editModalRef.current.close()}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
       </dialog>
     </div>
   );

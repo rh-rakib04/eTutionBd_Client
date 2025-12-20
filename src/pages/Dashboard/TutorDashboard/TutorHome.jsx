@@ -109,10 +109,10 @@ const TutorHome = () => {
         <Link to="/dashboard/revenue-history" className="btn btn-primary">
           Revenue History
         </Link>
-        <Link to="/dashboard/my-applications" className="btn btn-secondary">
+        <Link to="/dashboard/my-application" className="btn btn-secondary">
           My Applications
         </Link>
-        <Link to="/dashboard/ongoing-tuitions" className="btn btn-accent">
+        <Link to="/dashboard/ongoing-tuition" className="btn btn-accent">
           Ongoing Tuitions
         </Link>
       </div>
