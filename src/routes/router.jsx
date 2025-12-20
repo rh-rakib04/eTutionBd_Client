@@ -30,6 +30,7 @@ import RevenueHistory from "../pages/Dashboard/TutorDashboard/RevenueHistory";
 import TuitionDetails from "../components/TuitionDetails";
 import ErrorPage from "../components/ErrorPage";
 import ForbiddenPage from "../components/ForbiddenPage";
+import TutorDetails from "../components/TutorDetails";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,14 @@ const router = createBrowserRouter([
         ),
       },
       { path: "tutors", element: <Tutors /> },
+      {
+        path: "tutors/:id",
+        element: (
+          <PrivateRoutes>
+            <TutorDetails />
+          </PrivateRoutes>
+        ),
+      },
       { path: "about", element: <About /> },
       { path: "contact", element: <Contact /> },
     ],

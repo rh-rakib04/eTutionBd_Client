@@ -117,10 +117,10 @@ const BeATutor = () => {
               })}
               className="w-full border rounded-lg p-2 mt-1"
             >
-              <option value="">Select experience</option>
-              <option value="0-1 year">0–1 year</option>
-              <option value="1-3 years">1–3 years</option>
-              <option value="3+ years">3+ years</option>
+              <option value="">Select experience in year</option>
+              <option value="0-1 year">0–1 </option>
+              <option value="1-3 years">1–3 </option>
+              <option value="3+ years">3+ </option>
             </select>
             {errors.experience && (
               <p className="text-red-500 text-sm mt-1">

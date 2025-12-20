@@ -6,10 +6,11 @@ import Loading from "./Loading";
 import useAuth from "../hooks/useAuth";
 import ApplyTutorModal from "../pages/Dashboard/TutorDashboard/ApplyTutorModal";
 import useRole from "../hooks/useRole";
+import ErrorPage from "./ErrorPage";
 
 const TuitionDetails = () => {
   const { id } = useParams();
-  const {role} = useRole();
+  const { role } = useRole();
   const axiosInstance = useAxios();
   const applyModalRef = useRef();
   const { user } = useAuth();
@@ -27,8 +28,7 @@ const TuitionDetails = () => {
   });
 
   if (isLoading) return <Loading />;
-  if (isError)
-    return <p className="text-center text-red-500">Failed to load data</p>;
+  if (isError) return <ErrorPage />;
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
@@ -40,69 +40,62 @@ const TuitionDetails = () => {
       {/* Main Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
         {/* LEFT CONTENT */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* Image */}
-          <img
-            src={tuition.image || "https://source.unsplash.com/800x400/?study"}
-            alt="Tuition"
-            className="w-full h-64 object-cover rounded-xl"
-          />
+        <div className="lg:col-span-2 space-y-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 shadow-lg text-white">
+  <img
+    src={tuition.image || "https://source.unsplash.com/800x400/?study"}
+    alt="Tuition"
+    className="w-full h-64 object-cover rounded-xl border border-white/30"
+  />
 
-          {/* Title */}
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold">
-              {tuition.subject} – {tuition.classLevel}
-            </h1>
-            <span className="bg-green-100 text-green-600 text-sm px-3 py-1 rounded-full">
-              {tuition.status}
-            </span>
-          </div>
+  <div className="flex items-center justify-between">
+    <h1 className="text-2xl font-bold">
+      {tuition.subject} – {tuition.classLevel}
+    </h1>
+    <span className="bg-green-500/20 text-green-300 text-sm px-3 py-1 rounded-full">
+      {tuition.status}
+    </span>
+  </div>
 
-          {/* Info Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <InfoCard title="Subject" value={tuition.subject} />
-            <InfoCard title="Class" value={tuition.classLevel} />
-            <InfoCard title="Location" value={tuition.location} />
-            <InfoCard title="Budget" value={`৳${tuition.salary}`} />
-          </div>
+  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <InfoCard title="Subject" value={tuition.subject} />
+    <InfoCard title="Class" value={tuition.classLevel} />
+    <InfoCard title="Location" value={tuition.location} />
+    <InfoCard title="Budget" value={`৳${tuition.salary}`} />
+  </div>
 
-          {/* About */}
-          <div>
-            <h2 className="text-xl font-semibold mb-2">About This Tuition</h2>
-            <p className="text-gray-600 leading-relaxed">
-              {tuition.description}
-            </p>
-          </div>
+  <div>
+    <h2 className="text-xl font-semibold mb-2">About This Tuition</h2>
+    <p className="text-white/80 leading-relaxed">{tuition.description}</p>
+  </div>
 
-          {/* Schedule */}
-          <div className="bg-purple-600 text-white rounded-xl p-5 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <p className="text-sm opacity-80">Schedule</p>
-              <p className="font-semibold">{tuition.daysPerWeek} days / week</p>
-            </div>
-            <div>
-              <p className="text-sm opacity-80">Duration</p>
-              <p className="font-semibold">{tuition.duration} hours / class</p>
-            </div>
-            <div>
-              <p className="text-sm opacity-80">Start Date</p>
-              <p className="font-semibold">
-                {new Date(tuition.createdAt).toDateString()}
-              </p>
-            </div>
-          </div>
+  <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl p-5 grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div>
+      <p className="text-sm opacity-80">Schedule</p>
+      <p className="font-semibold">{tuition.daysPerWeek} days / week</p>
+    </div>
+    <div>
+      <p className="text-sm opacity-80">Duration</p>
+      <p className="font-semibold">{tuition.duration} hours / class</p>
+    </div>
+    <div>
+      <p className="text-sm opacity-80">Start Date</p>
+      <p className="font-semibold">
+        {new Date(tuition.createdAt).toDateString()}
+      </p>
+    </div>
+  </div>
 
-          {/* Requirements */}
-          <div>
-            <h2 className="text-xl font-semibold mb-2">Requirements</h2>
-            <ul className="list-disc list-inside text-gray-600 space-y-1">
-              <li>Strong knowledge of {tuition.subject}</li>
-              <li>Experience teaching {tuition.classLevel}</li>
-              <li>Good communication skills</li>
-              <li>Patient and responsible</li>
-            </ul>
-          </div>
-        </div>
+  <div>
+    <h2 className="text-xl font-semibold mb-2">Requirements</h2>
+    <ul className="list-disc list-inside text-white/70 space-y-1">
+      <li>Strong knowledge of {tuition.subject}</li>
+      <li>Experience teaching {tuition.classLevel}</li>
+      <li>Good communication skills</li>
+      <li>Patient and responsible</li>
+    </ul>
+  </div>
+</div>
+
 
         {/* RIGHT SIDEBAR */}
         <div className="border rounded-xl p-5 h-fit shadow-sm">
