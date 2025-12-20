@@ -28,22 +28,19 @@ import UserManagement from "../pages/Dashboard/AdminDashboard/UserManagement";
 import TuitionManagement from "../pages/Dashboard/AdminDashboard/TuitionManagement";
 import RevenueHistory from "../pages/Dashboard/TutorDashboard/RevenueHistory";
 import TuitionDetails from "../components/TuitionDetails";
+import ErrorPage from "../components/ErrorPage";
+import ForbiddenPage from "../components/ForbiddenPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: MainLayout,
+    element: <MainLayout />,
+    errorElement: <ErrorPage />,
     children: [
+      { index: true, element: <Home /> },
+      { path: "tuitions", element: <Tuitions /> },
       {
-        index: true,
-        Component: Home,
-      },
-      {
-        path: "tuitions",
-        Component: Tuitions,
-      },
-      {
-        path: "/tuitions/:id",
+        path: "tuitions/:id",
         element: (
           <PrivateRoutes>
             <TuitionDetails />
@@ -58,43 +55,29 @@ const router = createBrowserRouter([
           </PrivateRoutes>
         ),
       },
-      {
-        path: "tutors",
-        Component: Tutors,
-      },
-      {
-        path: "about",
-        Component: About,
-      },
-      {
-        path: "contact",
-        Component: Contact,
-      },
+      { path: "tutors", element: <Tutors /> },
+      { path: "about", element: <About /> },
+      { path: "contact", element: <Contact /> },
     ],
   },
   {
     path: "auth",
-    Component: AuthLayout,
+    element: <AuthLayout />,
+    errorElement: <ErrorPage />,
     children: [
-      {
-        path: "/auth/login",
-        Component: Login,
-      },
-      {
-        path: "/auth/register",
-        Component: Register,
-      },
+      { path: "login", element: <Login /> },
+      { path: "register", element: <Register /> },
     ],
   },
   {
     path: "dashboard",
-    Component: Dashboard,
+    element: <Dashboard />,
+    errorElement: <ErrorPage />,
     children: [
-      {
-        path: "home",
-        element: <HomeDashboard />,
-      },
-      // student route
+      { path: "home", element: <HomeDashboard /> },
+      { path: "setting", element: <Setting /> },
+
+      // Student routes
       {
         path: "my-tuitions",
         element: (
@@ -143,6 +126,8 @@ const router = createBrowserRouter([
           </StudentRoute>
         ),
       },
+
+      // Tutor routes
       {
         path: "my-application",
         element: (
@@ -167,6 +152,8 @@ const router = createBrowserRouter([
           </TutorRoute>
         ),
       },
+
+      // Admin routes
       {
         path: "user-management",
         element: (
@@ -183,11 +170,11 @@ const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
-      {
-        path: "setting",
-        element: <Setting />,
-      },
     ],
   },
+  // Catch-all route for 404
+  { path: "*", element: <ErrorPage /> },
+  // Optional forbidden route
+  { path: "forbidden", element: <ForbiddenPage /> },
 ]);
 export default router;

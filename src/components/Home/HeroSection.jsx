@@ -14,7 +14,7 @@ const HeroSection = () => {
   });
 
   return (
-    <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden rounded-b-">
+    <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden ">
       {/* Background Glow */}
       <div className="absolute inset-0">
         <div className="absolute -top-32 -right-32 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl"></div>

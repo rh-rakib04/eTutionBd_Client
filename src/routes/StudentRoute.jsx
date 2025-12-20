@@ -2,6 +2,7 @@ import React from "react";
 import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
 import Loading from "../components/Loading";
+import ForbiddenPage from "../components/ForbiddenPage";
 
 const StudentRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -11,7 +12,7 @@ const StudentRoute = ({ children }) => {
     return <Loading />;
   }
   if (role !== "student") {
-    return <div>Forbidden</div>;
+    return <ForbiddenPage />;
   }
   return children;
 };
