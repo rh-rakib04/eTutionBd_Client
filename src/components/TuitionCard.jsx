@@ -16,7 +16,7 @@ const TuitionCard = ({ tuition }) => {
       <div className="relative mb-4">
         <img
           src={tuition.image || "/default-banner.jpg"}
-          alt={tuition.title}
+          alt={tuition.subject}
           className="h-44 w-full object-cover rounded-2xl border border-white/30"
         />
 
@@ -30,25 +30,23 @@ const TuitionCard = ({ tuition }) => {
       </div>
 
       {/* CONTENT */}
-      <div className="space-y-3 text-white">
-        <h3 className="text-xl font-bold">{tuition.title}</h3>
-
-        <div className="flex items-center gap-3 text-sm text-white/80">
-          <FaMapMarkerAlt className="text-primary" />
-          <span>{tuition.location}</span>
-        </div>
-
-        <div className="flex items-center gap-3 text-sm text-white/80">
-          <FaMoneyBillWave className="text-primary" />
-          <span>৳{tuition.salary}</span>
-        </div>
-
-        <div className="flex items-center gap-3 text-sm text-white/80">
+      <div className="space-y-3 ">
+        <div className="flex  items-center gap-3 text-xl font-bold ">
           <FaBook className="text-primary" />
           <span>{tuition.subject}</span>
         </div>
 
-        <div className="border-t border-white/20 pt-4 flex items-center justify-between text-sm text-white/60">
+        <div className="flex items-center gap-3 text-sm ">
+          <FaMapMarkerAlt className="text-primary" />
+          <span>{tuition.location}</span>
+        </div>
+
+        <div className="flex items-center gap-3 text-sm ">
+          <FaMoneyBillWave className="text-primary" />
+          <span>৳{tuition.salary}</span>
+        </div>
+
+        <div className="border-t border-white/20 pt-4 flex items-center justify-between text-sm ">
           <p>{tuition.applied} tutor(s) applied</p>
           <p className="text-xs">{tuition.time}</p>
         </div>

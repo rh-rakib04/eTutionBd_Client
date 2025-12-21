@@ -40,7 +40,7 @@ const TuitionDetails = () => {
       {/* Main Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
         {/* LEFT CONTENT */}
-        <div className="lg:col-span-2 space-y-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 shadow-lg text-white">
+        <div className="lg:col-span-2 space-y-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 shadow-lg ">
   <img
     src={tuition.image || "https://source.unsplash.com/800x400/?study"}
     alt="Tuition"
@@ -65,10 +65,10 @@ const TuitionDetails = () => {
 
   <div>
     <h2 className="text-xl font-semibold mb-2">About This Tuition</h2>
-    <p className="text-white/80 leading-relaxed">{tuition.description}</p>
+    <p className=" leading-relaxed">{tuition.description}</p>
   </div>
 
-  <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl p-5 grid grid-cols-1 md:grid-cols-3 gap-4">
+  <div className="bg-gradient-to-r from-purple-600 to-indigo-600  rounded-xl p-5 grid grid-cols-1 md:grid-cols-3 gap-4">
     <div>
       <p className="text-sm opacity-80">Schedule</p>
       <p className="font-semibold">{tuition.daysPerWeek} days / week</p>
@@ -87,7 +87,7 @@ const TuitionDetails = () => {
 
   <div>
     <h2 className="text-xl font-semibold mb-2">Requirements</h2>
-    <ul className="list-disc list-inside text-white/70 space-y-1">
+    <ul className="list-disc list-inside /70 space-y-1">
       <li>Strong knowledge of {tuition.subject}</li>
       <li>Experience teaching {tuition.classLevel}</li>
       <li>Good communication skills</li>
@@ -115,7 +115,7 @@ const TuitionDetails = () => {
             className={`w-full py-2 rounded-lg mt-5 transition 
     ${
       role === "tutor"
-        ? "bg-purple-600 hover:bg-purple-700 text-white"
+        ? "bg-purple-600 hover:bg-purple-700 "
         : "bg-gray-400 text-gray-700 cursor-not-allowed"
     }`}
           >
