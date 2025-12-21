@@ -1,4 +1,5 @@
 import {
+  BarChart3,
   BookOpen,
   CreditCard,
   CreditCardIcon,
@@ -15,7 +16,7 @@ import { Link, NavLink, Outlet } from "react-router";
 import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
 import ThemeToggle from "../components/ThemeToggle";
-import { TbCash } from "react-icons/tb";
+import { TbAnalyze, TbCash } from "react-icons/tb";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -246,6 +247,19 @@ const Dashboard = () => {
                     <BookOpen />{" "}
                     <span className="is-drawer-close:hidden">
                       Tuition Management
+                    </span>
+                  </NavLink>
+                </li>
+                {/* Reports Analytics*/}
+                <li>
+                  <NavLink
+                    to="/dashboard/reports-analytics"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Reports Analytics"
+                  >
+                    <BarChart3 />{" "}
+                    <span className="is-drawer-close:hidden">
+                      Reports Analytics
                     </span>
                   </NavLink>
                 </li>

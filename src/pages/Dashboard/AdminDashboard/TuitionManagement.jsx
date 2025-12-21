@@ -18,13 +18,11 @@ const TuitionManagement = () => {
     },
   });
 
-  // Approve tuition
   const handleApprove = async (id) => {
     await axiosSecure.patch(`/tuitions/${id}`, { status: "approved" });
     refetch();
   };
 
-  // Reject tuition
   const handleReject = async (id) => {
     await axiosSecure.patch(`/tuitions/${id}`, { status: "rejected" });
     refetch();
@@ -36,16 +34,17 @@ const TuitionManagement = () => {
     <div className="p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Tuition Management</h2>
-        <p className="text-sm text-gray-500">
+        <h2 className="text-3xl font-bold text-primary ">Tuition Management</h2>
+        <p className="text-sm ">
           Manage all tuition requests posted by students
         </p>
       </div>
 
-      {/* Table */}
-      <div className="overflow-x-auto bg-base-100 rounded-xl shadow">
-        <table className="table table-zebra w-full">
-          <thead className="bg-base-200">
+      {/* Glassy Table */}
+      <div className="overflow-x-auto rounded-2xl shadow-lg 
+        bg-accent/10 backdrop-blur-md border border-primary/20">
+        <table className="table w-full ">
+          <thead className="bg-accent/10 ">
             <tr>
               <th>Subject</th>
               <th>Class</th>
@@ -57,19 +56,22 @@ const TuitionManagement = () => {
           </thead>
           <tbody>
             {tuitions.map((t) => (
-              <tr key={t._id} className="hover:bg-base-200 transition">
+              <tr
+                key={t._id}
+                className="hover:bg-accent/10 transition border-b border-primary/10"
+              >
                 <td className="font-semibold">{t.subject}</td>
                 <td>{t.classLevel}</td>
                 <td>{t.location}</td>
-                <td className="text-primary font-bold">TK {t.salary}</td>
+                <td className="text-primary font-bold">৳{t.salary}</td>
                 <td>
                   <span
-                    className={`badge ${
+                    className={`badge px-3 py-1 rounded-full text-xs font-semibold ${
                       t.status === "pending"
-                        ? "badge-warning"
+                        ? "bg-yellow-500/20 text-yellow-300"
                         : t.status === "approved"
-                        ? "badge-success"
-                        : "badge-error"
+                        ? "bg-green-500/20 text-green-300"
+                        : "bg-red-500/20 text-red-300"
                     }`}
                   >
                     {t.status}
@@ -80,19 +82,19 @@ const TuitionManagement = () => {
                     <div className="flex gap-2 justify-center">
                       <button
                         onClick={() => handleApprove(t._id)}
-                        className="btn btn-sm btn-success"
+                        className="btn btn-sm bg-green-600 hover:bg-green-700  flex items-center gap-1"
                       >
                         <CheckCircle size={16} /> Approve
                       </button>
                       <button
                         onClick={() => handleReject(t._id)}
-                        className="btn btn-sm btn-error"
+                        className="btn btn-sm bg-red-600 hover:bg-red-700  flex items-center gap-1"
                       >
                         <XCircle size={16} /> Reject
                       </button>
                     </div>
                   ) : (
-                    <span className="text-gray-400 text-sm italic">
+                    <span className="/50 text-sm italic">
                       No actions available
                     </span>
                   )}

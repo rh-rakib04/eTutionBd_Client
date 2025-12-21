@@ -36,13 +36,15 @@ const UserManagement = () => {
     refetch();
   };
 
-  // 🗑 Delete
+  // Delete
   const handleDelete = async (id) => {
     const confirm = await Swal.fire({
       title: "Delete user?",
       text: "This action cannot be undone",
       icon: "warning",
       showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
       confirmButtonText: "Delete",
     });
 
@@ -54,11 +56,19 @@ const UserManagement = () => {
   };
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-6">User Management</h2>
+    <div className="p-6">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-3xl font-bold  text-primary">User Management</h2>
+        <p className="text-sm ">
+          Manage all registered users and their roles
+        </p>
+      </div>
 
-      <div className="overflow-x-auto">
-        <table className="table table-zebra">
+      {/* Glassy Table */}
+      <div className="overflow-x-auto rounded-2xl shadow-lg 
+        bg-base-200 backdrop-blur-md border border-accent/20">
+        <table className="table w-full ">
           <thead>
             <tr>
               <th>User</th>
@@ -66,30 +76,34 @@ const UserManagement = () => {
               <th>Role</th>
               <th>Status</th>
               <th>Edit</th>
-              <th>Actions</th>
+              <th className="text-center">Actions</th>
             </tr>
           </thead>
 
           <tbody>
             {users.map((user) => (
-              <tr key={user._id}>
+              <tr
+                key={user._id}
+                className="hover:bg-primary/10 transition border-b border-accent/10"
+              >
+                {/* User Info */}
                 <td className="flex items-center gap-3">
                   <img
                     src={user.photoURL || "https://i.pravatar.cc/40"}
-                    className="w-10 h-10 rounded-full"
+                    className="w-10 h-10 rounded-full border border-accent/30 shadow"
                   />
-                  <span>{user.displayName || "N/A"}</span>
+                  <span className="font-semibold">{user.displayName || "N/A"}</span>
                 </td>
 
-                <td>{user.email}</td>
+                {/* Email */}
+                <td className="">{user.email}</td>
 
+                {/* Role Selector */}
                 <td>
                   <select
-                    className="select select-bordered select-sm"
+                    className="select select-sm bg-base-100 border border-accent/30 "
                     value={user.role}
-                    onChange={(e) =>
-                      handleRoleChange(user._id, e.target.value)
-                    }
+                    onChange={(e) => handleRoleChange(user._id, e.target.value)}
                   >
                     <option value="student">Student</option>
                     <option value="tutor">Tutor</option>
@@ -97,28 +111,31 @@ const UserManagement = () => {
                   </select>
                 </td>
 
+                {/* Status Badge */}
                 <td>
                   <span
-                    className={`badge ${
+                    className={`px-3 py-1 rounded-full text-xs font-semibold ${
                       user.status === "blocked"
-                        ? "badge-error"
-                        : "badge-success"
+                        ? "bg-red-500/20 text-red-300"
+                        : "bg-green-500/20 text-green-300"
                     }`}
                   >
                     {user.status || "active"}
                   </span>
                 </td>
 
+                {/* Edit Button */}
                 <td>
                   <button
-                    className="btn btn-xs btn-primary"
+                    className="btn btn-xs bg-indigo-600 hover:bg-indigo-700 "
                     onClick={() => setSelectedUser(user)}
                   >
                     Edit
                   </button>
                 </td>
 
-                <td className="flex gap-2">
+                {/* Actions */}
+                <td className="flex gap-2 justify-center">
                   <button
                     onClick={() =>
                       handleStatusChange(
@@ -126,14 +143,18 @@ const UserManagement = () => {
                         user.status === "blocked" ? "active" : "blocked"
                       )
                     }
-                    className="btn btn-xs btn-warning"
+                    className={`btn btn-xs ${
+                      user.status === "blocked"
+                        ? "bg-green-600 hover:bg-green-700 "
+                        : "bg-yellow-500 hover:bg-yellow-600 "
+                    }`}
                   >
                     {user.status === "blocked" ? "Activate" : "Block"}
                   </button>
 
                   <button
                     onClick={() => handleDelete(user._id)}
-                    className="btn btn-xs btn-error"
+                    className="btn btn-xs bg-red-600 hover:bg-red-700 "
                   >
                     Delete
                   </button>
@@ -144,7 +165,7 @@ const UserManagement = () => {
         </table>
       </div>
 
-      {/*  MODAL  */}
+      {/* Modal */}
       {selectedUser && (
         <UpdateUserModal
           user={selectedUser}

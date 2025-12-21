@@ -31,6 +31,7 @@ import TuitionDetails from "../components/TuitionDetails";
 import ErrorPage from "../components/ErrorPage";
 import ForbiddenPage from "../components/ForbiddenPage";
 import TutorDetails from "../components/TutorDetails";
+import ReportsAnalytics from "../pages/Dashboard/AdminDashboard/ReportsAnalytics";
 
 const router = createBrowserRouter([
   {
@@ -176,6 +177,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <TuitionManagement />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "reports-analytics",
+        element: (
+          <AdminRoute>
+            <ReportsAnalytics />
           </AdminRoute>
         ),
       },
