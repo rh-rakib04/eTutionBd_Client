@@ -12,83 +12,83 @@
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
-  
+
   /* Primary Brand Colors */
-  primary: #6366f1;           /* Indigo 500 */
-  primary-content: #ffffff;   /* White text on primary */
-  
-  secondary: #a855f7;         /* Purple 500 */
+  primary: #6366f1; /* Indigo 500 */
+  primary-content: #ffffff; /* White text on primary */
+
+  secondary: #a855f7; /* Purple 500 */
   secondary-content: #ffffff; /* White text on secondary */
-  
-  accent: #3b82f6;           /* Blue 500 */
-  accent-content: #ffffff;   /* White text on accent */
-  
+
+  accent: #3b82f6; /* Blue 500 */
+  accent-content: #ffffff; /* White text on accent */
+
   /* Semantic Colors */
-  success: #10b981;          /* Emerald 500 */
+  success: #10b981; /* Emerald 500 */
   success-content: #ffffff;
-  
-  warning: #f59e0b;          /* Amber 500 */
+
+  warning: #f59e0b; /* Amber 500 */
   warning-content: #ffffff;
-  
-  error: #ef4444;            /* Red 500 */
+
+  error: #ef4444; /* Red 500 */
   error-content: #ffffff;
-  
-  info: #06b6d4;             /* Cyan 500 */
+
+  info: #06b6d4; /* Cyan 500 */
   info-content: #ffffff;
-  
+
   /* Neutral Colors */
-  base-100: #ffffff;         /* Main background */
-  base-200: #f9fafb;         /* Secondary background */
-  base-300: #f3f4f6;         /* Tertiary background */
-  base-content: #111827;     /* Text on base */
-  
+  base-100: #ffffff; /* Main background */
+  base-200: #f9fafb; /* Secondary background */
+  base-300: #f3f4f6; /* Tertiary background */
+  base-content: #111827; /* Text on base */
+
   /* Neutral shades */
-  neutral: #4b5563;          /* Gray 600 */
+  neutral: #4b5563; /* Gray 600 */
   neutral-content: #ffffff;
-  
+
   /* Additional UI elements */
-  "base-100-alpha": rgba(255, 255, 255, 0.7);  /* Glass effect */
+  "base-100-alpha":rgba(255, 255, 255, 0.7) ; /* Glass effect */
 }
 
 /* DARK THEME */
 @plugin "daisyui/theme" {
   name: "dark";
-  
+
   /* Primary Brand Colors (Lighter for dark mode) */
-  primary: #818cf8;           /* Indigo 400 */
-  primary-content: #030712;   /* Dark text on primary */
-  
-  secondary: #c084fc;         /* Purple 400 */
+  primary: #818cf8; /* Indigo 400 */
+  primary-content: #030712; /* Dark text on primary */
+
+  secondary: #c084fc; /* Purple 400 */
   secondary-content: #030712; /* Dark text on secondary */
-  
-  accent: #60a5fa;           /* Blue 400 */
-  accent-content: #030712;   /* Dark text on accent */
-  
+
+  accent: #60a5fa; /* Blue 400 */
+  accent-content: #030712; /* Dark text on accent */
+
   /* Semantic Colors */
-  success: #34d399;          /* Emerald 400 */
+  success: #34d399; /* Emerald 400 */
   success-content: #030712;
-  
-  warning: #fbbf24;          /* Amber 400 */
+
+  warning: #fbbf24; /* Amber 400 */
   warning-content: #030712;
-  
-  error: #f87171;            /* Red 400 */
+
+  error: #f87171; /* Red 400 */
   error-content: #030712;
-  
-  info: #22d3ee;             /* Cyan 400 */
+
+  info: #22d3ee; /* Cyan 400 */
   info-content: #030712;
-  
+
   /* Neutral Colors */
-  base-100: #030712;         /* Main background - Gray 950 */
-  base-200: #111827;         /* Secondary background - Gray 900 */
-  base-300: #1f2937;         /* Tertiary background - Gray 800 */
-  base-content: #f3f4f6;     /* Text on base - Gray 100 */
-  
+  base-100: #030712; /* Main background - Gray 950 */
+  base-200: #111827; /* Secondary background - Gray 900 */
+  base-300: #1f2937; /* Tertiary background - Gray 800 */
+  base-content: #f3f4f6; /* Text on base - Gray 100 */
+
   /* Neutral shades */
-  neutral: #374151;          /* Gray 700 */
+  neutral: #374151; /* Gray 700 */
   neutral-content: #f3f4f6;
-  
+
   /* Additional UI elements */
-  "base-100-alpha": rgba(3, 7, 18, 0.7);  /* Glass effect for dark */
+  "base-100-alpha":rgba(3, 7, 18, 0.7) ; /* Glass effect for dark */
 }
 
 /* Custom utility classes for glass effect */
@@ -106,7 +106,8 @@
 
 /* Smooth transitions for theme switching */
 * {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 /* Custom scrollbar for both themes */
@@ -142,4 +143,19 @@ li a {
 }
 li a.active {
   @apply bg-primary text-primary-content shadow-sm;
+}
+
+@keyframes gradient-x {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 8s ease infinite;
 }

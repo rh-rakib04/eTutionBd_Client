@@ -4,6 +4,7 @@ import Loading from "../../../components/Loading";
 import UpdateUserModal from "./UpdateUserModal";
 import useAxios from "../../../hooks/useAxios";
 import { useState } from "react";
+import { SquarePen } from "lucide-react";
 
 const UserManagement = () => {
   const axiosSecure = useAxios();
@@ -60,14 +61,14 @@ const UserManagement = () => {
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold  text-primary">User Management</h2>
-        <p className="text-sm ">
-          Manage all registered users and their roles
-        </p>
+        <p className="text-sm ">Manage all registered users and their roles</p>
       </div>
 
       {/* Glassy Table */}
-      <div className="overflow-x-auto rounded-2xl shadow-lg 
-        bg-base-200 backdrop-blur-md border border-accent/20">
+      <div
+        className="overflow-x-auto rounded-2xl shadow-lg 
+        bg-base-200 backdrop-blur-md border border-accent/20"
+      >
         <table className="table w-full ">
           <thead>
             <tr>
@@ -92,7 +93,9 @@ const UserManagement = () => {
                     src={user.photoURL || "https://i.pravatar.cc/40"}
                     className="w-10 h-10 rounded-full border border-accent/30 shadow"
                   />
-                  <span className="font-semibold">{user.displayName || "N/A"}</span>
+                  <span className="font-semibold">
+                    {user.displayName || "N/A"}
+                  </span>
                 </td>
 
                 {/* Email */}
@@ -116,8 +119,8 @@ const UserManagement = () => {
                   <span
                     className={`px-3 py-1 rounded-full text-xs font-semibold ${
                       user.status === "blocked"
-                        ? "bg-red-500/20 text-red-300"
-                        : "bg-green-500/20 text-green-300"
+                        ? "bg-red-300/20 text-red-500"
+                        : "bg-green-300/20 text-green-500"
                     }`}
                   >
                     {user.status || "active"}
@@ -127,9 +130,10 @@ const UserManagement = () => {
                 {/* Edit Button */}
                 <td>
                   <button
-                    className="btn btn-xs bg-indigo-600 hover:bg-indigo-700 "
+                    className="btn btn-xs bg-primary-content/50 hover:bg-primary-content text-accent/150 hover:text-accent-content "
                     onClick={() => setSelectedUser(user)}
                   >
+                    <SquarePen className="w-3" />
                     Edit
                   </button>
                 </td>

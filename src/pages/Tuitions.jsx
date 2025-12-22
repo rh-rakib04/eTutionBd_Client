@@ -3,9 +3,13 @@ import TuitionCard from "../components/TuitionCard";
 import useAxios from "../hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../components/Loading";
+import { Link } from "react-router";
+import { BookOpen, Plus } from "lucide-react";
+import useRole from "../hooks/useRole";
 
 const Tuitions = () => {
   const axios = useAxios();
+  const role = useRole();
 
   const {
     data: tuitions = [],
@@ -27,6 +31,25 @@ const Tuitions = () => {
   if (isError) {
     return <p className="text-red-500">{error.message}</p>;
   }
+  if (tuitions.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center h-[70vh] text-center">
+        <BookOpen size={80} className="text-gray-400 mb-4" />
+        <h2 className="text-2xl font-bold mb-2">No Tuitions Posted Yet</h2>
+
+        {role === "student" ? (
+          <Link to="/dashboard/post-tuition" className="btn btn-primary">
+            <Plus size={24} /> Post a Tuition
+          </Link>
+        ) : (
+          <p className="text-gray-500 mb-4">
+            Students haven’t posted any tuition.
+          </p>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-7xl mx-auto p-5">
       <h1 className="text-4xl mt-10 text-center md:text-5xl font-extrabold">

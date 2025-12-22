@@ -41,61 +41,60 @@ const TuitionDetails = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
         {/* LEFT CONTENT */}
         <div className="lg:col-span-2 space-y-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 shadow-lg ">
-  <img
-    src={tuition.image || "https://source.unsplash.com/800x400/?study"}
-    alt="Tuition"
-    className="w-full h-64 object-cover rounded-xl border border-white/30"
-  />
+          <img
+            src={tuition.image || "https://source.unsplash.com/800x400/?study"}
+            alt="Tuition"
+            className="w-full h-64 object-cover rounded-xl border border-white/30"
+          />
 
-  <div className="flex items-center justify-between">
-    <h1 className="text-2xl font-bold">
-      {tuition.subject} – {tuition.classLevel}
-    </h1>
-    <span className="bg-green-500/20 text-green-300 text-sm px-3 py-1 rounded-full">
-      {tuition.status}
-    </span>
-  </div>
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-bold">
+              {tuition.subject} – {tuition.classLevel}
+            </h1>
+            <span className="bg-green-500/20 text-green-300 text-sm px-3 py-1 rounded-full">
+              {tuition.status}
+            </span>
+          </div>
 
-  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-    <InfoCard title="Subject" value={tuition.subject} />
-    <InfoCard title="Class" value={tuition.classLevel} />
-    <InfoCard title="Location" value={tuition.location} />
-    <InfoCard title="Budget" value={`৳${tuition.salary}`} />
-  </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <InfoCard title="Subject" value={tuition.subject} />
+            <InfoCard title="Class" value={tuition.classLevel} />
+            <InfoCard title="Location" value={tuition.location} />
+            <InfoCard title="Budget" value={`৳${tuition.salary}`} />
+          </div>
 
-  <div>
-    <h2 className="text-xl font-semibold mb-2">About This Tuition</h2>
-    <p className=" leading-relaxed">{tuition.description}</p>
-  </div>
+          <div>
+            <h2 className="text-xl font-semibold mb-2">About This Tuition</h2>
+            <p className=" leading-relaxed">{tuition.description}</p>
+          </div>
 
-  <div className="bg-gradient-to-r from-purple-600 to-indigo-600  rounded-xl p-5 grid grid-cols-1 md:grid-cols-3 gap-4">
-    <div>
-      <p className="text-sm opacity-80">Schedule</p>
-      <p className="font-semibold">{tuition.daysPerWeek} days / week</p>
-    </div>
-    <div>
-      <p className="text-sm opacity-80">Duration</p>
-      <p className="font-semibold">{tuition.duration} hours / class</p>
-    </div>
-    <div>
-      <p className="text-sm opacity-80">Start Date</p>
-      <p className="font-semibold">
-        {new Date(tuition.createdAt).toDateString()}
-      </p>
-    </div>
-  </div>
+          <div className="bg-gradient-to-r from-purple-600 to-indigo-600  rounded-xl p-5 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <p className="text-sm opacity-80">Schedule</p>
+              <p className="font-semibold">{tuition.daysPerWeek} days / week</p>
+            </div>
+            <div>
+              <p className="text-sm opacity-80">Duration</p>
+              <p className="font-semibold">{tuition.duration} hours / class</p>
+            </div>
+            <div>
+              <p className="text-sm opacity-80">Start Date</p>
+              <p className="font-semibold">
+                {new Date(tuition.createdAt).toDateString()}
+              </p>
+            </div>
+          </div>
 
-  <div>
-    <h2 className="text-xl font-semibold mb-2">Requirements</h2>
-    <ul className="list-disc list-inside /70 space-y-1">
-      <li>Strong knowledge of {tuition.subject}</li>
-      <li>Experience teaching {tuition.classLevel}</li>
-      <li>Good communication skills</li>
-      <li>Patient and responsible</li>
-    </ul>
-  </div>
-</div>
-
+          <div>
+            <h2 className="text-xl font-semibold mb-2">Requirements</h2>
+            <ul className="list-disc list-inside /70 space-y-1">
+              <li>Strong knowledge of {tuition.subject}</li>
+              <li>Experience teaching {tuition.classLevel}</li>
+              <li>Good communication skills</li>
+              <li>Patient and responsible</li>
+            </ul>
+          </div>
+        </div>
 
         {/* RIGHT SIDEBAR */}
         <div className="border rounded-xl p-5 h-fit shadow-sm">
@@ -107,21 +106,32 @@ const TuitionDetails = () => {
           <p className="text-sm text-gray-500 mt-4">Applicants</p>
           <p className="font-semibold">12</p>
 
-          <button
-            onClick={() =>
-              role === "tutor" && applyModalRef.current.showModal()
-            }
-            disabled={role === "student"} // 🔑 disables for students
-            className={`w-full py-2 rounded-lg mt-5 transition 
-    ${
-      role === "tutor"
-        ? "bg-purple-600 hover:bg-purple-700 "
-        : "bg-gray-400 text-gray-700 cursor-not-allowed"
-    }`}
-          >
-            Apply As Tutor
+          <button>
+            {role === "tutor" ? (
+              tuition.status === "assigned" ? (
+                <button
+                  disabled
+                  className="w-full p-2 rounded-lg mt-5 bg-green-600 text-white cursor-not-allowed"
+                >
+                  Tuition Assigned
+                </button>
+              ) : (
+                <button
+                  onClick={() => applyModalRef.current.showModal()}
+                  className="w-full p-2 rounded-lg mt-5 bg-purple-600 hover:bg-purple-700 text-white transition"
+                >
+                  Apply As Tutor
+                </button>
+              )
+            ) : (
+              <button
+                disabled
+                className="w-full p-2 rounded-lg mt-5 bg-gray-400 text-gray-700 cursor-not-allowed"
+              >
+                Apply As Tutor
+              </button>
+            )}
           </button>
-
           <p className="text-xs text-center text-gray-500 mt-3">
             Not a tutor?{" "}
             <Link to="/be-a-tutor" className="text-purple-600 underline">
