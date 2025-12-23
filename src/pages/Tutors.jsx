@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import TutorCard from "../components/TutorCard";
 import Loading from "../components/Loading";
-import useAxios from "../hooks/useAxios";
+import useAxiosInstance from "../hooks/useAxiosInstance";
 
 const Tutors = () => {
-  const axios = useAxios();
+  const axios = useAxiosInstance();
 
   const {
     data: tutors = [],

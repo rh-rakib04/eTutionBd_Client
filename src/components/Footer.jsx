@@ -78,7 +78,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/how-it-works"
+                  to="/"
                   className="text-base-content/70 hover:text-primary"
                 >
                   How It Works
@@ -86,7 +86,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/terms"
+                  to="/"
                   className="text-base-content/70 hover:text-primary"
                 >
                   Terms of Service
@@ -94,7 +94,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/privacy"
+                  to="/"
                   className="text-base-content/70 hover:text-primary"
                 >
                   Privacy Policy
@@ -130,7 +130,7 @@ const Footer = () => {
             {/* Social Media */}
             <div className="flex gap-3 pt-4">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/rakibul.hossain.925602"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-circle btn-sm bg-base-300 hover:bg-primary hover:text-primary-content border-none"
@@ -158,7 +158,7 @@ const Footer = () => {
                 </svg>
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/rakibulhossain04/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-circle btn-sm bg-base-300 hover:bg-primary hover:text-primary-content border-none"
@@ -173,7 +173,6 @@ const Footer = () => {
               </a>
             </div>
           </div>
-          
         </div>
       </div>
 

@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
-import useAxios from "../../hooks/useAxios";
+import useAxiosInstance from "../../hooks/useAxiosInstance";
 import Loading from "../Loading";
 import TutorCard from "../TutorCard";
 
 const LatestTutors = () => {
-  const axios = useAxios();
+  const axios = useAxiosInstance();
 
   const {
     data: tutors = [],

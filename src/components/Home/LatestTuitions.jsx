@@ -3,10 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
 import Loading from "../Loading";
 import TuitionCard from "../TuitionCard";
-import useAxios from "../../hooks/useAxios";
+import useAxiosInstance from "../../hooks/useAxiosInstance";
 
 const LatestTuitions = () => {
-  const axios = useAxios();
+  const axios = useAxiosInstance();
 
   const {
     data: tuitions = [],
@@ -25,7 +25,7 @@ const LatestTuitions = () => {
   if (isError) return <p className="text-red-500">{error.message}</p>;
 
   return (
-      <section className="py-12 relative overflow-hidden">
+    <section className="py-12 relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute inset-0 -z-10 bg-linear-to-b from-indigo-500/5 to-purple-500/5"></div>
 

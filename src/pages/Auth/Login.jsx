@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
-import useAxios from "../../hooks/useAxios";
+import useAxiosInstance from "../../hooks/useAxiosInstance";
 import Swal from "sweetalert2";
 import { TbFidgetSpinner } from "react-icons/tb";
 
@@ -11,7 +11,7 @@ const Login = () => {
   const { signIn, signInGoogle, loading } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const axios = useAxios();
+  const axios = useAxiosInstance();
   // form hook
   const {
     register,
@@ -20,7 +20,7 @@ const Login = () => {
   } = useForm();
   // form function
   const handelLogin = (data) => {
-    console.log(data);
+    // console.log(data);
     signIn(data.email, data.password)
       .then((result) => {
         const user = result.user;
@@ -32,35 +32,55 @@ const Login = () => {
         navigate(location?.state || "/");
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
-  // google signIn
   const handelGoogleSignIn = () => {
     signInGoogle()
-      .then((result) => {
-        //create user in mongodb
+      .then(async (result) => {
+        const user = result.user;
+
+        // Normalize email before saving
         const userInfo = {
-          email: result.user.email,
-          displayName: result.user.displayName,
-          photoURL: result.user.photoURL,
+          email: user.email.toLowerCase(),
+          displayName: user.displayName,
+          photoURL: user.photoURL,
         };
-        axios.post("/users", userInfo).then((res) => {
+
+        try {
+          const res = await axios.post("/users", userInfo);
+
           if (res.data.insertedId) {
-            console.log("User created in database");
+            // console.log("User created in database");
           }
+
           Swal.fire({
             icon: "success",
             title: "Signin Successful!",
             text: `Welcome, ${user.displayName}!`,
           });
+
+          // Navigate after success
           navigate(location?.state || "/");
-        });
+        } catch (err) {
+          console.error("Error saving user:", err.message);
+          Swal.fire({
+            icon: "error",
+            title: "Database Error",
+            text: "Could not save user info. Please try again.",
+          });
+        }
       })
       .catch((error) => {
-        console.log(error);
+        console.error("Google Sign-in Error:", error.message);
+        Swal.fire({
+          icon: "error",
+          title: "Signin Failed",
+          text: error.message,
+        });
       });
   };
+
   return (
     <div className="min-h-screen flex justify-center items-center bg-base-100 px-4">
       <div className="w-full max-w-sm">

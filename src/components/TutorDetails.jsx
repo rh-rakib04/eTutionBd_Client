@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Star, MessageCircle, Calendar, BookOpen } from "lucide-react";
 import Loading from "./Loading";
 import useAxios from "../hooks/useAxios";
+import useAxiosInstance from "../hooks/useAxiosInstance";
 import ErrorPage from "./ErrorPage";
 import { useState } from "react";
 import ReviewForm from "./ReviewForm";
@@ -11,6 +12,7 @@ import ReviewForm from "./ReviewForm";
 const TutorDetails = () => {
   const { id } = useParams();
   const axiosSecure = useAxios();
+  const axios = useAxiosInstance();
   const [showModal, setShowModal] = useState(false);
   const {
     data: tutor,
@@ -28,7 +30,7 @@ const TutorDetails = () => {
   const { data: reviews = [], refetch } = useQuery({
     queryKey: ["reviews", id],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/reviews/${id}`);
+      const res = await axios.get(`/reviews/${id}`);
       return res.data;
     },
     enabled: !!id,

@@ -4,11 +4,11 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { getAuth } from "firebase/auth";
 import useAuth from "../../hooks/useAuth";
-import useAxios from "../../hooks/useAxios";
 import Swal from "sweetalert2";
 import { PiStudentDuotone } from "react-icons/pi";
 import { TfiBook } from "react-icons/tfi";
 import { TbFidgetSpinner } from "react-icons/tb";
+import useAxiosInstance from "../../hooks/useAxiosInstance";
 
 const Register = () => {
   const { registerUser, signInGoogle, updateUserProfile, loading } = useAuth();
@@ -20,7 +20,7 @@ const Register = () => {
   } = useForm();
   const location = useLocation();
   const navigate = useNavigate();
-  const axios = useAxios();
+  const axios = useAxiosInstance();
   const auth = getAuth();
   const role = watch("role");
   // Handle Register
@@ -35,17 +35,18 @@ const Register = () => {
       const formData = new FormData();
       formData.append("image", profileImg);
 
-      const ImgURL = `https://api.imgbb.com/1/upload?key=${
-        import.meta.env.VITE_img_api_key
-      }`;
+      const res = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`,
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
 
-      const imgRes = await axios.post(ImgURL, formData);
-      const photoURL = imgRes.data.data.url;
+      const photoURL = res.data.data.url;
 
       // 3) Update Firebase profile
       await updateUserProfile({
         displayName: data.name,
-        photoURL: photoURL,
+        photoURL,
       });
 
       // 4) Get updated user from Firebase
@@ -53,7 +54,7 @@ const Register = () => {
 
       // 5) Save user to MongoDB (only once!)
       const userInfo = {
-        email: user.email,
+        email: user.email?.toLowerCase(),
         displayName: user.displayName,
         photoURL: user.photoURL,
         role: data.role,
@@ -64,7 +65,7 @@ const Register = () => {
       // tutor info
       if (data.role === "tutor") {
         const tutorInfo = {
-          email: user.email,
+          email: user.email?.toLowerCase(),
           displayName: user.displayName,
           photoURL: user.photoURL,
           subjects: data.subjects,
@@ -76,6 +77,7 @@ const Register = () => {
 
         await axios.post("/tutors", tutorInfo);
       }
+
       // 6) Show success alert
       Swal.fire({
         toast: true,
@@ -94,7 +96,10 @@ const Register = () => {
       Swal.fire({
         icon: "error",
         title: "Registration Failed",
-        text: error.message || "Something went wrong!",
+        text:
+          error.response?.data?.message ||
+          error.message ||
+          "Something went wrong!",
       });
     }
   };
@@ -121,7 +126,7 @@ const Register = () => {
       });
       navigate(location?.state || "/");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       Swal.fire({
         icon: "error",
         title: "Google Sign-in Failed",

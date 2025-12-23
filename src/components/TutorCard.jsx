@@ -2,10 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { FaMapMarkerAlt, FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { Link } from "react-router";
-import useAxios from "../hooks/useAxios";
+import useAxiosInstance from "../hooks/useAxiosInstance";
 
 const TutorCard = ({ tutor }) => {
-  const axiosSecure = useAxios();
+  const axiosSecure = useAxiosInstance();
 
   const { data: reviews = [] } = useQuery({
     queryKey: ["reviews", tutor._id],

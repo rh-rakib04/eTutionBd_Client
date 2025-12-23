@@ -1,6 +1,6 @@
 import React from "react";
 import TuitionCard from "../components/TuitionCard";
-import useAxios from "../hooks/useAxios";
+import useAxiosInstance from "../hooks/useAxiosInstance";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../components/Loading";
 import { Link } from "react-router";
@@ -8,7 +8,7 @@ import { BookOpen, Plus } from "lucide-react";
 import useRole from "../hooks/useRole";
 
 const Tuitions = () => {
-  const axios = useAxios();
+  const axios = useAxiosInstance();
   const role = useRole();
 
   const {

@@ -1,10 +1,10 @@
 import { useState } from "react";
-import useAxios from "../hooks/useAxios";
+import useAxiosInstance from "../hooks/useAxiosInstance";
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
 
 const ReviewForm = ({ tutorId, onReviewAdded }) => {
-  const axiosSecure = useAxios();
+  const axiosOne = useAxiosInstance();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const { user } = useAuth();
@@ -18,7 +18,7 @@ const ReviewForm = ({ tutorId, onReviewAdded }) => {
       comment,
     };
 
-    await axiosSecure.post("/reviews", review);
+    await axiosOne.post("/reviews", review);
     setRating(0);
     setComment("");
     onReviewAdded();
