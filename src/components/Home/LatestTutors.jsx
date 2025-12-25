@@ -19,7 +19,6 @@ const LatestTutors = () => {
       return res.data;
     },
   });
-
   if (isLoading) return <Loading />;
   if (isError) return <p className="text-red-500">{error.message}</p>;
 

@@ -80,7 +80,7 @@ const AdminHomePage = () => {
 
   // Extra analytics
   const totalRevenue = payments.reduce((sum, p) => sum + (p.amount || 0), 0);
-  const statusCounts = tuitions.reduce((acc, t) => {
+  const statusCounts = tuitions?.tuitions?.reduce((acc, t) => {
     acc[t.status] = (acc[t.status] || 0) + 1;
     return acc;
   }, {});
@@ -155,8 +155,7 @@ const AdminHomePage = () => {
         <div className="grid md:grid-cols-3 gap-6 ">
           <ActivityCard
             title="Latest Tuitions"
-            items={tuitions
-              .slice(0, 5)
+            items={tuitions?.tuitions?.slice(0, 5)
               .map((t) => `${t.subject} - ${t.classLevel}`)}
           />
           <ActivityCard

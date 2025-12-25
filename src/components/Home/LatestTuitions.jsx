@@ -20,7 +20,7 @@ const LatestTuitions = () => {
       return res.data;
     },
   });
-
+  console.log(tuitions.tuitions);
   if (isLoading) return <Loading />;
   if (isError) return <p className="text-red-500">{error.message}</p>;
 
@@ -38,7 +38,7 @@ const LatestTuitions = () => {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {tuitions.slice(0, 6).map((tuition) => (
+          {tuitions?.tuitions?.slice(0, 6).map((tuition) => (
             <TuitionCard key={tuition._id} tuition={tuition} />
           ))}
         </div>

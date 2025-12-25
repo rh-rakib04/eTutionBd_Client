@@ -20,7 +20,7 @@ const MyTuition = () => {
   const { data: tuitions = [], refetch } = useQuery({
     queryKey: ["myTuition", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/tuitions?email=${user.email}`);
+      const res = await axiosSecure.get(`/my-tuitions?email=${user.email}`);
       return res.data;
     },
     enabled: !!user?.email,

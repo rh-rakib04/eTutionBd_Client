@@ -1,24 +1,36 @@
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { FaMapMarkerAlt, FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
+import {
+  FaMapMarkerAlt,
+  FaStar,
+  FaStarHalfAlt,
+  FaRegStar,
+} from "react-icons/fa";
 import { Link } from "react-router";
 import useAxiosInstance from "../hooks/useAxiosInstance";
 
 const TutorCard = ({ tutor }) => {
   const axiosSecure = useAxiosInstance();
 
-  const { data: reviews = [] } = useQuery({
+  const {
+    data: reviews = [],
+    isError,
+    error,
+  } = useQuery({
     queryKey: ["reviews", tutor._id],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/reviews/${tutor._id}`);
+      const res = await axiosSecure.get(`/reviews/${tutor._id}`, {
+        validateStatus: () => true,
+      });
       return res.data;
     },
     enabled: !!tutor._id,
   });
 
+  const safeReviews = Array.isArray(reviews) ? reviews : [];
   const averageRating =
-    reviews.length > 0
-      ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+    safeReviews.length > 0
+      ? safeReviews.reduce((sum, r) => sum + r.rating, 0) / safeReviews.length
       : 0;
 
   return (
@@ -38,7 +50,9 @@ const TutorCard = ({ tutor }) => {
         <div>
           <h3 className="text-lg font-semibold ">{tutor.displayName}</h3>
           <p className="text-sm ">
-            {Array.isArray(tutor.subjects) ? tutor.subjects.join(", ") : tutor.subjects}
+            {Array.isArray(tutor.subjects)
+              ? tutor.subjects.join(", ")
+              : tutor.subjects}
           </p>
 
           {/* Rating */}
@@ -53,8 +67,12 @@ const TutorCard = ({ tutor }) => {
                 return <FaRegStar key={i} className="text-gray-400" />;
               }
             })}
-            <span className="font-semibold  ml-1">{averageRating.toFixed(1)}</span>
-            <span className="text-gray-300">({reviews.length} reviews)</span>
+            <span className="font-semibold  ml-1">
+              {averageRating.toFixed(1)}
+            </span>
+            <span className="text-gray-300">
+              ({safeReviews.length} reviews)
+            </span>
           </div>
         </div>
       </div>
@@ -65,9 +83,20 @@ const TutorCard = ({ tutor }) => {
           <FaMapMarkerAlt className="text-indigo-300" />
           <span>{tutor.location || "Location not provided"}</span>
         </div>
-        <p>💼 Experience: <span className="font-medium">{tutor.experience || 0} years</span></p>
-        <p>🎓 Qualification: <span className="font-medium">{tutor.qualification || "Not provided"}</span></p>
-        <p>💰 Hourly Rate: <span className="font-medium">৳{tutor.hourlyRate || "500"}</span></p>
+        <p>
+          💼 Experience:{" "}
+          <span className="font-medium">{tutor.experience || 0} years</span>
+        </p>
+        <p>
+          🎓 Qualification:{" "}
+          <span className="font-medium">
+            {tutor.qualification || "Not provided"}
+          </span>
+        </p>
+        <p>
+          💰 Hourly Rate:{" "}
+          <span className="font-medium">৳{tutor.hourlyRate || "500"}</span>
+        </p>
       </div>
 
       {/* CTA */}

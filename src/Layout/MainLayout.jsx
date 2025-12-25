@@ -20,7 +20,7 @@ const MainLayout = () => {
       <Navbar />
 
       {/* Main Content */}
-      <main className="grow min-h-[80vh] px-4">
+      <main className="grow min-h-[80vh]">
         <Outlet />
       </main>
 

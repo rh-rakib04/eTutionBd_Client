@@ -54,7 +54,7 @@ const TuitionManagement = () => {
             </tr>
           </thead>
           <tbody>
-            {tuitions.map((t) => (
+            {tuitions?.tuitions?.map((t) => (
               <tr key={t._id} className="hover:bg-base-200/50 transition">
                 <td className="font-semibold">{t.subject}</td>
                 <td>{t.classLevel}</td>

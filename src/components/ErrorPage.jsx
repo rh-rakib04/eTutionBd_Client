@@ -1,11 +1,12 @@
 import React from "react";
-import { Link } from "react-router";
 import { motion } from "framer-motion";
 import { XCircle } from "lucide-react";
 
 const ErrorPage = () => {
+  const errorMessage = "Something went wrong. Please try again or contact support.";
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-linear-to-b from-indigo-200/5 to-purple-500/5 p-6">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-indigo-200/5 to-purple-500/5 p-6">
       <motion.div
         className="bg-white p-10 rounded-xl shadow-lg text-center w-full max-w-md"
         initial={{ opacity: 0, scale: 0.9 }}
@@ -36,14 +37,24 @@ const ErrorPage = () => {
 
         {/* Message */}
         <motion.p
-          className="text-gray-700 mb-6"
+          className="text-gray-700 mb-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
-          The page you’re looking for doesn’t exist or an unexpected error
-          occurred.
+          The page you’re looking for doesn’t exist or an unexpected error occurred.
         </motion.p>
+
+        {/* Error Details */}
+        <motion.div
+          className="bg-red-50 border border-red-200 rounded-lg p-4 text-left text-sm text-red-700 mb-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          <strong>Error Details:</strong>
+          <pre className="whitespace-pre-wrap mt-2">{errorMessage}</pre>
+        </motion.div>
 
         {/* Buttons */}
         <motion.div
@@ -52,12 +63,18 @@ const ErrorPage = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.7 }}
         >
-          <Link to="/" className="btn btn-primary w-full">
+          <a href="/" className="btn btn-primary w-full">
             Go Back Home
-          </Link>
-          <Link to="/dashboard" className="btn btn-secondary w-full">
+          </a>
+          <a href="/dashboard" className="btn btn-secondary w-full">
             Go to Dashboard
-          </Link>
+          </a>
+          <a
+            href={`mailto:support@etutionbd.com?subject=Error Report&body=${encodeURIComponent(errorMessage)}`}
+            className="btn btn-outline w-full"
+          >
+            Report This Issue
+          </a>
         </motion.div>
       </motion.div>
     </div>

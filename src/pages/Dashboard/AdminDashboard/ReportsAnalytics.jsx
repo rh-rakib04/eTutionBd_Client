@@ -46,7 +46,7 @@ const ReportsAnalytics = () => {
   const completedPayments = payments.filter((p) => p.paymentStatus === "paid").length;
 
   // Tuition Distribution
-  const statusCounts = tuitions.reduce((acc, t) => {
+  const statusCounts = tuitions?.tuitions?.reduce((acc, t) => {
     acc[t.status] = (acc[t.status] || 0) + 1;
     return acc;
   }, {});
