@@ -18,8 +18,8 @@ This project was built as a **job task assessment** to demonstrate real-world ME
 ---
 
 ## 🌐 Live Links
-- **Client:** https://etuitionbd.web.app  
-- **Server:** https://etuitionbd-server.vercel.app  
+- **Client:** https://etutionbd-rh.web.app  
+- **Server:** https://e-tution-bd-server-chi.vercel.app  
 
 ---
 
