@@ -177,4 +177,5 @@ This project was built as a **job task assessment** to demonstrate real-world ME
 ---
 ### 👤 Author
 - Rakibul Hossain Bhuiya
-- 📧 Email: rakibulhossainbhuiya@gmail.com
+- 📧 Email:
+  rakibulhossainbhuiya@gmail.com
