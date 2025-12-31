@@ -7,7 +7,7 @@ It allows students to post tuition requirements, tutors to apply for jobs, and a
 This project was built as a **job task assessment** to demonstrate real-world MERN stack development skills.
 
 ---
-![Home Page](./screenshots.png)
+![Home Page](./screenshots.jpg)
 
 ---
 ## 🎯 Project Purpose
