@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import useAxiosInstance from "../../hooks/useAxiosInstance";
 import Loading from "../Loading";
 import TutorCard from "../TutorCard";
+import SectionHeader from "../SectionHeader";
 
 const LatestTutors = () => {
   const axios = useAxiosInstance();
@@ -28,12 +29,11 @@ const LatestTutors = () => {
       <div className="absolute inset-0 -z-10 bg-linear-to-b from-indigo-500/5 to-purple-500/5"></div>
 
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl text-center font-bold">
-          Latest Tutors
-        </h2>
-        <p className="text-center text-base-content/70 mb-10">
-          Meet some of the newest tutors who joined our platform
-        </p>
+        <SectionHeader
+          title="Latest"
+          highlight="Tutors"
+          subtitle=" Meet some of the newest tutors who joined our platform"
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {tutors.slice(0, 6).map((tutor) => (

@@ -25,7 +25,7 @@ const HowItWorks = () => {
       {/* Background glow */}
       <div className="absolute inset-0 -z-10 bg-linear-to-b from-indigo-500/5 to-purple-500/5"></div>
       <div className="max-w-7xl mx-auto px-4 text-center">
-        <h2 className="text-4xl md:text-5xl font-bold mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4">
           How{" "}
           <span className="bg-linear-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
             eTuitionBd

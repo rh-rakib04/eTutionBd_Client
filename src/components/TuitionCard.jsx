@@ -1,72 +1,76 @@
-import { motion } from "framer-motion";
-import { FaMapMarkerAlt, FaMoneyBillWave, FaBook } from "react-icons/fa";
-import { HiOutlineArrowRight } from "react-icons/hi";
+import {
+  FaBook,
+  FaMapMarkerAlt,
+  FaMoneyBillWave,
+  FaUserGraduate,
+  FaClock,
+} from "react-icons/fa";
+import { HiArrowRight } from "react-icons/hi";
 import { Link } from "react-router";
+import { motion } from "framer-motion";
 
 const TuitionCard = ({ tuition }) => {
   return (
     <motion.div
-      whileHover={{ scale: 1.02 }}
-      transition={{ type: "spring", stiffness: 200 }}
-      className="relative group rounded-3xl overflow-hidden 
-      bg-white/10 backdrop-blur-md border border-white/20 
-      shadow-lg hover:shadow-2xl transition p-6"
+      whileHover={{ scale: 1.01 }}
+      className="relative rounded-2xl 
+      bg-white/20 backdrop-blur-lg border border-white/30 
+      shadow-lg hover:shadow-2xl transition p-6 flex flex-col"
     >
-      {/* IMAGE */}
-      <div className="relative mb-4">
-        <img
-          src={tuition.image || "/default-banner.jpg"}
-          alt={tuition.subject}
-          className="h-44 w-full object-cover rounded-2xl border border-white/30"
-        />
-
-        {/* CLASS BADGE */}
-        <span className="absolute top-4 right-4 px-4 py-1 text-sm font-semibold rounded-full bg-primary text-primary-content shadow">
-          {tuition.class}
+      {/* TOP BADGES */}
+      <div className="flex items-center justify-between mb-4">
+        <span
+          className="px-4 py-1 rounded-full text-xs font-semibold 
+        bg-primary/10 text-primary"
+        >
+          {tuition.classLevel}
         </span>
 
-        {/* GRADIENT OVERLAY */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent rounded-2xl" />
+        <span className="flex items-center gap-2 text-xs text-base-content/60">
+          <FaClock />
+          {tuition.duration} hours
+        </span>
       </div>
 
-      {/* CONTENT */}
-      <div className="space-y-3 ">
-        <div className="flex  items-center gap-3 text-xl font-bold ">
-          <FaBook className="text-primary" />
-          <span>{tuition.subject}</span>
-        </div>
+      {/* SUBJECT */}
+      <h3 className="text-lg font-bold flex items-center gap-3 mb-4">
+        <FaBook className="text-primary text-lg" />
+        {tuition.subject}
+      </h3>
 
-        <div className="flex items-center gap-3 text-sm ">
+      {/* INFO */}
+      <div className="grid grid-cols-2 gap-4 text-sm mb-6">
+        <div className="flex items-center gap-2">
           <FaMapMarkerAlt className="text-primary" />
-          <span>{tuition.location}</span>
+          {tuition.location}
         </div>
 
-        <div className="flex items-center gap-3 text-sm ">
-          <FaMoneyBillWave className="text-primary" />
-          <span>৳{tuition.salary}</span>
+        <div className="flex items-center gap-2">
+          <FaMoneyBillWave className="text-primary" />৳ {tuition.salary}
         </div>
 
-        <div className="border-t border-white/20 pt-4 flex items-center justify-between text-sm ">
-          <p>{tuition.applied} tutor(s) applied</p>
-          <p className="text-xs">{tuition.time}</p>
+        <div className="flex items-center gap-2 col-span-2">
+          <FaUserGraduate className="text-primary" />
+          {tuition.applied} tutor(s) applied
         </div>
-
-        {/* CTA */}
-        <Link
-          to={`/tuitions/${tuition._id}`}
-          className="mt-4 w-full flex items-center justify-center gap-2 py-3 rounded-xl 
-          bg-primary  font-semibold 
-          group-hover:gap-3 transition-all"
-        >
-          View Details <HiOutlineArrowRight />
-        </Link>
       </div>
 
-      {/* GLOW EFFECT */}
+      {/* CTA */}
+      <Link
+        to={`/tuitions/${tuition._id}`}
+        className="flex items-center justify-center gap-2
+        w-full py-3 rounded-xl font-semibold
+        bg-primary text-primary-content
+        group-hover:gap-3 transition-all"
+      >
+        View Details <HiArrowRight />
+      </Link>
+
+      {/* GLOW */}
       <div
-        className="absolute inset-0 rounded-3xl pointer-events-none 
-      opacity-0 group-hover:opacity-100 transition 
-      bg-gradient-to-r from-primary/10 to-purple-500/10"
+        className="absolute inset-0 rounded-2xl pointer-events-none
+        opacity-0 group-hover:opacity-100 transition
+        bg-gradient-to-r from-primary/10 to-secondary/10"
       />
     </motion.div>
   );

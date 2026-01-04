@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import Loading from "../Loading";
 import TuitionCard from "../TuitionCard";
 import useAxiosInstance from "../../hooks/useAxiosInstance";
+import SectionHeader from "../SectionHeader";
 
 const LatestTuitions = () => {
   const axios = useAxiosInstance();
@@ -30,13 +31,11 @@ const LatestTuitions = () => {
       <div className="absolute inset-0 -z-10 bg-linear-to-b from-indigo-500/5 to-purple-500/5"></div>
 
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl text-center font-bold">
-          Latest Tuitions
-        </h2>
-        <p className="text-center text-base-content/70 mb-10">
-          Explore the newest tuition opportunities posted by students
-        </p>
-
+        <SectionHeader
+          title=" Latest"
+          highlight="Tuitions"
+          subtitle="   Explore the newest tuition opportunities posted by students"
+        />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {tuitions?.tuitions?.slice(0, 6).map((tuition) => (
             <TuitionCard key={tuition._id} tuition={tuition} />
