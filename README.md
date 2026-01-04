@@ -7,7 +7,9 @@ It allows students to post tuition requirements, tutors to apply for jobs, and a
 This project was built as a **job task assessment** to demonstrate real-world MERN stack development skills.
 
 ---
+![Home Page](/public/screenshots.jpg)
 
+---
 ## 🎯 Project Purpose
 - Find **qualified tutors** and **verified tuition posts**
 - Reduce communication gaps between students and tutors
@@ -175,6 +177,67 @@ This project was built as a **job task assessment** to demonstrate real-world ME
 - CORS
 
 ---
+
+## ⚙️ How to Run the Project Locally
+
+Follow the steps below to run the project on your local machine.
+
+---
+
+### 1️⃣ Clone the Repositories
+
+--bash
+git clone https://github.com/rh-rakib04/eTutionBd_Client
+git clone https://github.com/rh-rakib04/eTutionBd_Server
+
+###2️⃣ Run the Client (Frontend)
+cd etutionbd-client
+npm install
+npm run dev
+
+Create a .env file in the client root directory:
+VITE_FIREBASE_API_KEY=your_firebase_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_STRIPE_PUBLIC_KEY=your_stripe_publishable_key
+
+Client will run on:
+http://localhost:5173
+
+###3️⃣ Run the Server (Backend)
+cd etutionbd-server
+npm install
+npm run dev
+Create a .env file in the server root directory:
+
+PORT=5000
+DB_URI=your_mongodb_connection_string
+ACCESS_TOKEN_SECRET=your_jwt_secret
+STRIPE_SECRET_KEY=your_stripe_secret_key
+
+
+Server will run on:
+
+http://localhost:5000
+
+###4️⃣ Admin Access Setup (Optional)
+
+To access the admin dashboard:
+
+Register a user
+
+Open MongoDB Atlas
+
+Update the user document:
+
+{
+  "role": "admin"
+}
+
+
+Log in again
+---
 ### 👤 Author
 - Rakibul Hossain Bhuiya
-- 📧 Email: rakibulhossainbhuiya@gmail.com
+- 📧 Email:
+  rakibulhossainbhuiya@gmail.com
