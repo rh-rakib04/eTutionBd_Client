@@ -5,10 +5,10 @@ import WhyChooseUs from "../components/Home/WhyChooseUs";
 import LatestTuitions from "../components/Home/LatestTuitions";
 import LatestTutors from "../components/Home/LatestTutors";
 import Categories from "../components/Home/Categories";
-import PlatformStats from "../components/Home/PlatformStats";
 import Testimonials from "../components/Home/Testimonials";
 import FAQ from "../components/Home/FAQ";
 import CallToAction from "../components/Home/CallToAction";
+import StatsSection from "../components/Home/StatsSection";
 
 const Home = () => {
   return (
@@ -19,7 +19,7 @@ const Home = () => {
       <HowItWorks />
       <WhyChooseUs />
       <Categories />
-      <PlatformStats />
+      <StatsSection />
       <Testimonials />
       <FAQ />
       <CallToAction />

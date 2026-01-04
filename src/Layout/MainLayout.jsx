@@ -6,6 +6,9 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Loading from "../components/Loading";
 import ScrollProgress from "../components/ScrollProgress";
+import ScrollIndicator from "../components/ScrollIndicator";
+import ScrollToTop from "../components/ScrollToTop";
+import SmartScrollArrow from "../components/SmartScrollArrow";
 
 const MainLayout = () => {
   const [loading, setLoading] = useState(true);
@@ -24,10 +27,7 @@ const MainLayout = () => {
       <Navbar />
 
       {/* Page Content */}
-      <main
-        className="grow min-h-[80vh]"
-        aria-busy={loading}
-      >
+      <main className="grow min-h-[80vh]" aria-busy={loading}>
         <AnimatePresence mode="wait">
           {loading ? (
             <motion.div
@@ -53,6 +53,9 @@ const MainLayout = () => {
 
       {/* Footer */}
       <Footer />
+      <ScrollIndicator />
+      <ScrollToTop />
+      <SmartScrollArrow />
     </div>
   );
 };
