@@ -37,34 +37,22 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
-    errorElement: <ErrorPage />,
+    // errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Home /> },
       { path: "tuitions", element: <Tuitions /> },
       {
         path: "tuitions/:id",
-        element: (
-          <PrivateRoutes>
-            <TuitionDetails />
-          </PrivateRoutes>
-        ),
+        element: <TuitionDetails />,
       },
       {
         path: "be-a-tutor",
-        element: (
-          <PrivateRoutes>
-            <BeATutor />
-          </PrivateRoutes>
-        ),
+        element: <BeATutor />,
       },
       { path: "tutors", element: <Tutors /> },
       {
         path: "tutors/:id",
-        element: (
-          <PrivateRoutes>
-            <TutorDetails />
-          </PrivateRoutes>
-        ),
+        element: <TutorDetails />,
       },
       { path: "about", element: <About /> },
       { path: "contact", element: <Contact /> },
